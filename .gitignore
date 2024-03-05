@@ -1,0 +1,18 @@
+/target/
+configs/
+
+### Extent Reports ###
+extent.properties
+pdf-config.yaml
+
+### Eclipse ###
+.classpath
+.factorypath
+.project
+.settings
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store

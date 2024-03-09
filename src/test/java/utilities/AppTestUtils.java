@@ -13,7 +13,7 @@ import java.util.TreeMap;
 
 import io.cucumber.datatable.DataTable;
 
-public class MyTestUtils {
+public class AppTestUtils {
 
 	public static void pause(long time) {
 		try {

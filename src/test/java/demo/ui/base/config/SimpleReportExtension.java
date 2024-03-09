@@ -16,7 +16,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import utilities.ConfigReader;
 import utilities.DataManager;
-import utilities.MyTestUtils;
+import utilities.AppTestUtils;
 
 public class SimpleReportExtension
 		implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
@@ -46,8 +46,8 @@ public class SimpleReportExtension
 		}
 
 		report = new ExtentReports();
-		reporter = new ExtentSparkReporter(MyTestUtils.getCurrentDir() + String.format(
-				"/target/extent-reports/report-%s-%s.html", MyTestUtils.getDateString(), MyTestUtils.getTimeStamp()));
+		reporter = new ExtentSparkReporter(AppTestUtils.getCurrentDir() + String.format(
+				"/target/extent-reports/report-%s-%s.html", AppTestUtils.getDateString(), AppTestUtils.getTimeStamp()));
 		report.attachReporter(reporter);
 
 		reporter.config().setOfflineMode(true);

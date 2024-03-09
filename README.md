@@ -1,3 +1,3 @@
-- Please create a folder named "configs" under the "resources" package.
-- Then create a "config.properties" file under this folder.
-- Please see Hui Yang for default values for <config.properties>.
+- Please create a folder named `configs` under the `resources` package.
+- Then create a `config.properties` file under this folder.
+- Please contact [@HuiYangUS](https://github.com/HuiYangUS) for default values for `config.properties`.

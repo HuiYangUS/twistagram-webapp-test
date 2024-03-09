@@ -3,6 +3,7 @@ package demo.ui.metadata;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -24,6 +25,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeDriverInfo;
 import org.openqa.selenium.edge.EdgeDriverService;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.GeckoDriverInfo;
 import org.openqa.selenium.firefox.GeckoDriverService;
@@ -101,10 +103,14 @@ public class DriverDataTest {
 	@Order(value = 6)
 	@Tags(value = { @Tag("local"), @Tag("edge") })
 	void localEdgeDriverDataTest() {
+		EdgeOptions edgeOptions = new EdgeOptions();
+		Map<String, Object> prefs = new HashMap<>();
+		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true);
+		edgeOptions.setExperimentalOption("prefs", prefs);
 		EdgeDriver driver = new EdgeDriver(new EdgeDriverService.Builder()
 				.usingDriverExecutable(new File(
 						AppTestUtils.getCurrentDir() + "/src/test/resources/drivers/win/edgedriver/msedgedriver.exe"))
-				.build());
+				.build(), edgeOptions);
 		EdgeDriverInfo driverInfo = new EdgeDriverInfo();
 		assertTrue(driverInfo.isPresent() && driverInfo.isAvailable(), "Driver is not present or available.");
 		configDriver(driver);

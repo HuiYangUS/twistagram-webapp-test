@@ -1,3 +1,4 @@
 - Please create a folder named `configs` under the `resources` package.
 - Then create a `config.properties` file under this folder.
 - Please contact [@HuiYangUS](https://github.com/HuiYangUS) for default values for `config.properties`.
+- In order to test `Twistagram`, a local chrome profile must be setup and all chrome browsers must be closed.

@@ -37,10 +37,10 @@ public class WebUtils {
 	public void focusElement(WebElement element) {
 		// set element border to red and thick
 		js.executeScript("arguments[0].style.borderColor = 'red'; arguments[0].style.borderWidth = 'thick';", element);
-		MyTestUtils.pause(2);
+		AppTestUtils.pause(2);
 		// reset element border
 		js.executeScript("arguments[0].style.borderColor = ''; arguments[0].style.borderWidth = '';", element);
-		MyTestUtils.pause(1);
+		AppTestUtils.pause(1);
 	}
 
 	public void focusElement(By locator) {
@@ -64,7 +64,7 @@ public class WebUtils {
 		if (postfix == null)
 			tail = "";
 		if (useTimeStamp)
-			tail += "-" + MyTestUtils.getDateString() + "-" + MyTestUtils.getTimeStamp();
+			tail += "-" + AppTestUtils.getDateString() + "-" + AppTestUtils.getTimeStamp();
 		TakesScreenshot cam = (TakesScreenshot) driver;
 		File imgData = cam.getScreenshotAs(OutputType.FILE);
 		try {

@@ -20,15 +20,15 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
 
 /**
- * This <DriverFactory> class uses Selenium-4
- * Currently, Safari Driver is disabled.
+ * This <DriverFactory> class uses Selenium-4 Currently, Safari Driver is
+ * disabled.
  */
 public class DriverFactory {
 
 	private static ThreadLocal<WebDriver> localDriver;
 
 	private static String browser = "chrome";
-	private static boolean auto = false;
+	private static boolean auto = true;
 	private static boolean headless = false;
 	private static boolean isSet = false;
 	private static int waitTime = 5;
@@ -90,7 +90,7 @@ public class DriverFactory {
 			break;
 		case "edge":
 			String edgeDriverFilePath = getDriverDir() + "/edgedriver/msedgedriver"
-					+ (MyTestUtils.isWindows() ? ".exe" : "");
+					+ (AppTestUtils.isWindows() ? ".exe" : "");
 			EdgeDriverService edgeService = new EdgeDriverService.Builder()
 					.usingDriverExecutable(new File(edgeDriverFilePath)).build();
 			EdgeOptions edgeOptions = new EdgeOptions();
@@ -102,24 +102,13 @@ public class DriverFactory {
 			break;
 		case "firefox":
 			String firefoxDriverFilePath = getDriverDir() + "/firefoxdriver/geckodriver"
-					+ (MyTestUtils.isWindows() ? ".exe" : "");
+					+ (AppTestUtils.isWindows() ? ".exe" : "");
 			FirefoxDriverService firefoxService = new GeckoDriverService.Builder()
 					.usingDriverExecutable(new File(firefoxDriverFilePath)).build();
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
 			firefoxOptions.addPreference("geo.enabled", false);
 			findFirefoxHeadless(firefoxOptions);
 			driver = new FirefoxDriver(firefoxService, firefoxOptions);
-			break;
-		case "opera":
-			assertTrue(MyTestUtils.isOperaOnWindowsAvailable(), "Opera browser is not available.");
-			ChromeDriverService operaService = new ChromeDriverService.Builder()
-					.usingDriverExecutable(new File("src/test/resources/drivers/win/operadriver/operadriver.exe"))
-					.build();
-			ChromeOptions operaOptions = new ChromeOptions();
-			operaOptions.setExperimentalOption("w3c", true);
-			operaOptions.setBinary(MyTestUtils.getOperaOnWindowsPath());
-			findChromeHeadless(operaOptions);
-			driver = new ChromeDriver(operaService, operaOptions);
 			break;
 		case "safari":
 		default:
@@ -133,7 +122,7 @@ public class DriverFactory {
 
 	private static WebDriver getDefaultLocalDriver() {
 		String localDriverFilePath = getDriverDir() + "/chromedriver/chromedriver"
-				+ (MyTestUtils.isWindows() ? ".exe" : "");
+				+ (AppTestUtils.isWindows() ? ".exe" : "");
 		ChromeDriverService service = new ChromeDriverService.Builder()
 				.usingDriverExecutable(new File(localDriverFilePath)).build();
 		ChromeOptions options = new ChromeOptions();
@@ -176,6 +165,11 @@ public class DriverFactory {
 
 	private static WebDriver defaultAutoDriver() {
 		ChromeOptions options = new ChromeOptions();
+		// on windows
+		// path= C:/Users/Your_User_Name/AppData/Local/Google/Chrome/User Data
+		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
+		// profile name
+		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
 		findChromeHeadless(options);
 		return new ChromeDriver(options);
 	}
@@ -195,18 +189,21 @@ public class DriverFactory {
 			options.addArguments("-headless");
 	}
 
+	/**
+	 * Local drivers location
+	 */
 	public static String getDriverDir() {
 		String dirPathName = null;
-		if (MyTestUtils.isMac() && System.getProperty("os.arch").equalsIgnoreCase("x86_64"))
+		if (AppTestUtils.isMac() && System.getProperty("os.arch").equalsIgnoreCase("x86_64"))
 			dirPathName = "mac/intel";
-		else if (MyTestUtils.isMac() && System.getProperty("os.arch").equalsIgnoreCase("aarch64"))
+		else if (AppTestUtils.isMac() && System.getProperty("os.arch").equalsIgnoreCase("aarch64"))
 			dirPathName = "mac/m-chip";
-		else if (MyTestUtils.isWindows())
+		else if (AppTestUtils.isWindows())
 			dirPathName = "win";
-		else if (MyTestUtils.isLinux())
+		else if (AppTestUtils.isLinux())
 			dirPathName = "linux";
 		assertNotNull(dirPathName, "Failed to locate a valid directory for the driver.");
-		return MyTestUtils.getCurrentDir() + "/src/test/resources/drivers/" + dirPathName;
+		return AppTestUtils.getCurrentDir() + "/src/test/resources/drivers/" + dirPathName;
 	}
 
 }

@@ -32,6 +32,8 @@ public class DriverFactory {
 	private static String browser = "chrome";
 	private static boolean auto = false;
 	private static boolean headless = false;
+	private static boolean mobile = false;
+	private static String deviceName = null;
 	private static boolean isSet = false;
 	private static int waitTime = 5;
 
@@ -44,7 +46,7 @@ public class DriverFactory {
 			browser = System.getProperty(browserKey).strip().toLowerCase();
 		else {
 			try {
-				String browserTempValue = String.valueOf(ConfigReader.getValue("config", "browser")).strip()
+				String browserTempValue = String.valueOf(ConfigReader.getValue("config", browserKey)).strip()
 						.toLowerCase();
 				List<String> browserNames = Arrays.asList("chrome", "edge", "firefox", "safari");
 				if (browserNames.contains(browserTempValue))
@@ -61,7 +63,7 @@ public class DriverFactory {
 			auto = Boolean.valueOf(System.getProperty(autoKey).strip().toLowerCase());
 		else {
 			try {
-				auto = Boolean.valueOf(ConfigReader.getValue("config", "auto"));
+				auto = Boolean.valueOf(ConfigReader.getValue("config", autoKey));
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -72,7 +74,29 @@ public class DriverFactory {
 			headless = Boolean.valueOf(System.getProperty(headlessKey).strip().toLowerCase());
 		else {
 			try {
-				headless = Boolean.valueOf(ConfigReader.getValue("config", "headless"));
+				headless = Boolean.valueOf(ConfigReader.getValue("config", headlessKey));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
+		String mobileKey = "mobile";
+		if (System.getProperty(mobileKey) != null)
+			mobile = Boolean.valueOf(System.getProperty(mobileKey).strip().toLowerCase());
+		else {
+			try {
+				mobile = Boolean.valueOf(ConfigReader.getValue("config", mobileKey));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
+		String deviceKey = "deviceName";
+		if (System.getProperty(deviceKey) != null)
+			deviceName = String.valueOf(System.getProperty(deviceKey).strip());
+		else {
+			try {
+				deviceName = String.valueOf(ConfigReader.getValue("config", deviceKey));
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -161,6 +185,7 @@ public class DriverFactory {
 		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
 		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
 		findChromeHeadless(options);
+		emulateChromeIfMobile(options);
 		return new ChromeDriver(service, options);
 	}
 
@@ -209,12 +234,21 @@ public class DriverFactory {
 		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
 		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
 		findChromeHeadless(options);
+		emulateChromeIfMobile(options);
 		return new ChromeDriver(options);
 	}
 
 	private static void findChromeHeadless(ChromeOptions options) {
 		if (headless)
 			options.addArguments("--headless");
+	}
+
+	private static void emulateChromeIfMobile(ChromeOptions options) {
+		if (mobile && deviceName != null) {
+			Map<String, String> mobileEmulation = new HashMap<>();
+			mobileEmulation.put("deviceName", deviceName);
+			options.setExperimentalOption("mobileEmulation", mobileEmulation);
+		}
 	}
 
 	private static void findEdgeHeadless(EdgeOptions options) {

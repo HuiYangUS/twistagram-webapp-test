@@ -22,7 +22,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
 
 /**
- * This <DriverFactory> class uses Selenium-4 Currently, Safari Driver is
+ * This <DriverFactory> class uses Selenium-4. Currently, Safari Driver is
  * disabled.
  */
 public class DriverFactory {
@@ -239,8 +239,10 @@ public class DriverFactory {
 	}
 
 	private static void findChromeHeadless(ChromeOptions options) {
-		if (headless)
-			options.addArguments("--headless");
+		if (headless) {
+			options.addArguments("--headless=new");
+			options.addArguments("--no-sandbox");
+		}
 	}
 
 	private static void emulateChromeIfMobile(ChromeOptions options) {

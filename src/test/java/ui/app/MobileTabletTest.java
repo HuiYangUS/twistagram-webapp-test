@@ -51,6 +51,7 @@ public class MobileTabletTest extends DriverFactoryWebBase {
 		String actualHomeMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tempXpath)))
 				.getText();
 		assertEquals(expectedHomeMessage, actualHomeMessage);
+		webUtils.savesScreenshot("mobile-tablet", true);
 	}
 
 }

@@ -247,11 +247,7 @@ public class DriverFactory {
 	private static void findChromeHeadless(ChromeOptions options) {
 		if (headless) {
 			options.addArguments("--headless=new");
-			options.addArguments("--disable-gpu");
-			options.addArguments("--no-sandbox");
-			options.addArguments("--disable-dev-shm-usage");
-			options.addArguments("--disable-web-security");
-			options.addArguments("--allow-running-insecure-content");
+			options.addArguments("--user-agent=" + ConfigReader.getValue("config", "userAgent"));
 		}
 	}
 

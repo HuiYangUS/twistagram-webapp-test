@@ -1,9 +1,13 @@
 package cucumber.hooks.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import io.cucumber.java.*;
 
 import utilities.ConfigReader;
 import utilities.DataManager;
+import utilities.DriverFactory;
 import utilities.DriverManager;
 import utilities.PageManager;
 
@@ -18,24 +22,16 @@ public class TestWebHook {
 	}
 
 	private static void print() {
-		String browserName = "Chrome";
-		String data = System.getProperty("browser");
-		if (data != null) {
-			switch (data.strip().toLowerCase()) {
-			case "chrome":
-				break;
-			case "edge":
-				browserName = "Edge";
-				break;
-			case "firefox":
-				browserName = "Firefox";
-				break;
-			case "safari":
-			default:
+		String browserName = DriverFactory.getBrowser();
+		List<String> browsers = Arrays.asList("Chrome", "Edge", "Firefox", "Safari");
+		String displayName = null;
+		for (String browser : browsers) {
+			if (browser.equalsIgnoreCase(browserName)) {
+				displayName = browser;
 				break;
 			}
 		}
-		System.out.println("Test in " + browserName + ":");
+		System.out.println("Test in " + displayName + ":");
 	}
 
 	@Before(order = 1, value = "@ui or @web")

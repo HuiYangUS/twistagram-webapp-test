@@ -6,7 +6,6 @@ public class DataManager {
 
 	private static int count;
 	private static ThreadLocal<DataManager> localDataManager;
-	private static String dayOfWeek;
 	private static String password;
 	private static WebUtils webUtils;
 
@@ -29,15 +28,6 @@ public class DataManager {
 	public static void reset() {
 		if (localDataManager != null && localDataManager.get() != null)
 			localDataManager.set(null);
-	}
-
-	public String getDayOfWeek() {
-		assertNotNull(dayOfWeek, "No day of week data is given.");
-		return dayOfWeek;
-	}
-
-	public void setDayOfWeek(String name) {
-		DataManager.dayOfWeek = name;
 	}
 
 	public String getPasswordValue() {

@@ -24,7 +24,7 @@ public class HeadlessCheckTest extends DriverFactoryWebBase {
 	private static String url = ConfigReader.getValue("config", "url");
 
 	@Test
-	@Disabled(value = "Still trying to find out headless options to allow google account to login.")
+	@Disabled(value = "still trying to configure headless options to allow google account to login")
 	@DisplayName("Twista Gram App Google Login Test - Headless Mode")
 	@Tags(value = { @Tag("main"), @Tag("smoke") })
 	void runTest() {

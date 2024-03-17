@@ -2,13 +2,12 @@ package utilities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
 import java.sql.Timestamp;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.DateTimeException;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 import io.cucumber.datatable.DataTable;
@@ -89,32 +88,6 @@ public class AppTestUtils {
 		if (dataTable.asMaps().size() >= 1)
 			return dataTable.asMaps().get(0);
 		return new HashMap<String, String>();
-	}
-
-	/**
-	 * locates the directory of the auto chrome browser
-	 */
-	public static String getAutoChromeOnWindowsPath() {
-		assertTrue(isWindows(), "It must be on a windows machine.");
-		String autoChromePath = "C:/Programs+/Chrome/chrome.exe";
-		return autoChromePath;
-	}
-
-	public static boolean isAutoChromeOnWindowsAvailable() {
-		return (new File(getAutoChromeOnWindowsPath()).exists());
-	}
-
-	/**
-	 * locates the directory of the opera browser
-	 */
-	public static String getOperaOnWindowsPath() {
-		assertTrue(isWindows(), "It must be on a windows machine.");
-		String operaPath = "C:/Programs+/Opera/opera.exe";
-		return operaPath;
-	}
-
-	public static boolean isOperaOnWindowsAvailable() {
-		return (new File(getOperaOnWindowsPath()).exists());
 	}
 
 }

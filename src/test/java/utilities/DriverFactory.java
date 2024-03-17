@@ -40,6 +40,10 @@ public class DriverFactory {
 	private DriverFactory() {
 	}
 
+	public static String getBrowser() {
+		return browser;
+	}
+
 	private static void setUpDriver() {
 		String browserKey = "browser";
 		if (System.getProperty(browserKey) != null)
@@ -163,6 +167,7 @@ public class DriverFactory {
 					.usingDriverExecutable(new File(firefoxDriverFilePath)).build();
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
 			firefoxOptions.addPreference("geo.enabled", false);
+			firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
 			findFirefoxHeadless(firefoxOptions);
 			driver = new FirefoxDriver(firefoxService, firefoxOptions);
 			break;
@@ -211,6 +216,7 @@ public class DriverFactory {
 		case "firefox":
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
 			firefoxOptions.addPreference("geo.enabled", false);
+			firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
 			findFirefoxHeadless(firefoxOptions);
 			driver = new FirefoxDriver(firefoxOptions);
 			break;
@@ -225,9 +231,9 @@ public class DriverFactory {
 	}
 
 	/**
-	 * On windows, by default user data is located at
-	 * "C:/Users/Your_User_Name/AppData/Local/Google/Chrome/User Data", default
-	 * profile name is "Default" and custom profile follows "Profile #" pattern.
+	 * On windows, by default, user data is located at
+	 * "C:/Users/<user-name>/AppData/Local/Google/Chrome/User Data", default profile
+	 * name is "Default" and custom profile follows "Profile #" pattern.
 	 */
 	private static WebDriver defaultAutoDriver() {
 		ChromeOptions options = new ChromeOptions();
@@ -241,7 +247,11 @@ public class DriverFactory {
 	private static void findChromeHeadless(ChromeOptions options) {
 		if (headless) {
 			options.addArguments("--headless=new");
+			options.addArguments("--disable-gpu");
 			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--disable-web-security");
+			options.addArguments("--allow-running-insecure-content");
 		}
 	}
 
@@ -255,7 +265,7 @@ public class DriverFactory {
 
 	private static void findEdgeHeadless(EdgeOptions options) {
 		if (headless)
-			options.addArguments("--headless");
+			options.addArguments("--headless=new");
 	}
 
 	private static void findFirefoxHeadless(FirefoxOptions options) {

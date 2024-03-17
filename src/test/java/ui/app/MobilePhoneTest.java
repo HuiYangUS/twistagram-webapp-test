@@ -38,8 +38,8 @@ public class MobilePhoneTest extends DriverFactoryWebBase {
 		}
 		driver.findElement(By.xpath("//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button"))
 				.click();
-		String emailXpath = String.format("//div[@data-email='%s']", ConfigReader.getValue("config", "email"));
-		driver.findElement(By.xpath(emailXpath)).click();
+		String emailXpath = String.format("//div[@data-email='%s']/..", ConfigReader.getValue("config", "email"));
+		webUtils.mouse().click(driver.findElement(By.xpath(emailXpath))).perform();
 		driver.findElement(By.xpath("//button//span[text()='Continue']/ancestor::button")).click();
 		String tempXpath = "//main/div/div/span";
 		String expectedHomeMessage = String.format("Logged in as %s", ConfigReader.getValue("config", "fullName"));

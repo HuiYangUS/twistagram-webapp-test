@@ -7,24 +7,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ui.base.web.DriverFactoryWebBase;
 import utilities.ConfigReader;
 
-public class HeadlessCheckTest extends DriverFactoryWebBase {
-
-	@BeforeAll
-	static void setupHeadlessMode() {
-		System.setProperty("headless", "true");
-	}
+public class AutoDriverTest extends DriverFactoryWebBase {
 
 	private static String url = ConfigReader.getValue("config", "url");
 
+	@BeforeAll
+	static void setupAutoDriverMode() {
+		System.setProperty("auto", "true");
+	}
+
 	@Test
-	@DisplayName("Twista Gram App Google Login Test - Headless Mode")
+	@DisplayName("Twista Gram App Google Login Test - AutoDriver Mode")
 	@Tags(value = { @Tag("main"), @Tag("smoke") })
 	void runTest() {
 		driver.navigate().to(url);
@@ -49,7 +48,6 @@ public class HeadlessCheckTest extends DriverFactoryWebBase {
 		String actualHomeMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tempXpath)))
 				.getText();
 		assertEquals(expectedHomeMessage, actualHomeMessage);
-		webUtils.savesScreenshot("headless", true);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ui.base.web.DriverFactoryWebBase;
 import utilities.ConfigReader;
@@ -19,6 +20,7 @@ public class FirefoxTest extends DriverFactoryWebBase {
 	@BeforeAll
 	static void setupHeadlessMode() {
 		System.setProperty("browser", "firefox");
+		System.setProperty("headless", "false");
 	}
 
 	@Test
@@ -38,10 +40,14 @@ public class FirefoxTest extends DriverFactoryWebBase {
 				.click();
 		String emailXpath = String.format("//div[@data-email='%s']/..", ConfigReader.getValue("config", "email"));
 		webUtils.mouse().click(driver.findElement(By.xpath(emailXpath))).perform();
-		driver.findElement(By.xpath("//button//span[text()='Continue']/ancestor::button")).click();
+		wait.until(
+				ExpectedConditions.elementToBeClickable(By.xpath("//button//span[text()='Continue']/ancestor::button")))
+				.click();
 		String tempXpath = "//main/div/div/span";
 		String expectedHomeMessage = String.format("Logged in as %s", ConfigReader.getValue("config", "fullName"));
-		String actualHomeMessage = driver.findElement(By.xpath(tempXpath)).getText();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tempXpath))).getText();
+		String actualHomeMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tempXpath)))
+				.getText();
 		assertEquals(expectedHomeMessage, actualHomeMessage);
 	}
 

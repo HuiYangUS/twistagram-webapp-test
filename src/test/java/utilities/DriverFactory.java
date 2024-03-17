@@ -154,9 +154,7 @@ public class DriverFactory {
 			EdgeDriverService edgeService = new EdgeDriverService.Builder()
 					.usingDriverExecutable(new File(edgeDriverFilePath)).build();
 			EdgeOptions edgeOptions = new EdgeOptions();
-			Map<String, Object> prefs = new HashMap<>();
-			prefs.put("user_experience_metrics.personalization_data_consent_enabled", true);
-			edgeOptions.setExperimentalOption("prefs", prefs);
+			setEdgeOptions(edgeOptions);
 			findEdgeHeadless(edgeOptions);
 			driver = new EdgeDriver(edgeService, edgeOptions);
 			break;
@@ -166,8 +164,7 @@ public class DriverFactory {
 			FirefoxDriverService firefoxService = new GeckoDriverService.Builder()
 					.usingDriverExecutable(new File(firefoxDriverFilePath)).build();
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
-			firefoxOptions.addPreference("geo.enabled", false);
-			firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
+			setFirefoxOptions(firefoxOptions);
 			findFirefoxHeadless(firefoxOptions);
 			driver = new FirefoxDriver(firefoxService, firefoxOptions);
 			break;
@@ -187,11 +184,38 @@ public class DriverFactory {
 		ChromeDriverService service = new ChromeDriverService.Builder()
 				.usingDriverExecutable(new File(localDriverFilePath)).build();
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
-		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
+		setChromeOptions(options);
 		findChromeHeadless(options);
 		emulateChromeIfMobile(options);
 		return new ChromeDriver(service, options);
+	}
+
+	/**
+	 * Set specific conditions of <Chrome> for this application
+	 */
+	private static void setChromeOptions(ChromeOptions options) {
+		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
+		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
+	}
+
+	/**
+	 * Set specific conditions of <Edge> for this application
+	 */
+	private static void setEdgeOptions(EdgeOptions edgeOptions) {
+		// create data type for value of capability "prefs"
+		Map<String, Object> prefs = new HashMap<>();
+		// turn off personal prompt
+		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true);
+		edgeOptions.setExperimentalOption("prefs", prefs);
+	}
+
+	/**
+	 * Set specific conditions of <Firefox> for this application
+	 */
+	private static void setFirefoxOptions(FirefoxOptions firefoxOptions) {
+		// turn off geographical locator
+		firefoxOptions.addPreference("geo.enabled", false);
+		firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
 	}
 
 	/**
@@ -206,17 +230,13 @@ public class DriverFactory {
 			break;
 		case "edge":
 			EdgeOptions edgeOptions = new EdgeOptions();
-			Map<String, Object> prefs = new HashMap<>();
-			// turn off personal prompt
-			prefs.put("user_experience_metrics.personalization_data_consent_enabled", true);
-			edgeOptions.setExperimentalOption("prefs", prefs);
+			setEdgeOptions(edgeOptions);
 			findEdgeHeadless(edgeOptions);
 			driver = new EdgeDriver(edgeOptions);
 			break;
 		case "firefox":
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
-			firefoxOptions.addPreference("geo.enabled", false);
-			firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
+			setFirefoxOptions(firefoxOptions);
 			findFirefoxHeadless(firefoxOptions);
 			driver = new FirefoxDriver(firefoxOptions);
 			break;
@@ -225,20 +245,14 @@ public class DriverFactory {
 			driver = defaultAutoDriver();
 			break;
 		}
-
+		System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
 		configDriver(driver);
 		return driver;
 	}
 
-	/**
-	 * On windows, by default, user data is located at
-	 * "C:/Users/<user-name>/AppData/Local/Google/Chrome/User Data", default profile
-	 * name is "Default" and custom profile follows "Profile #" pattern.
-	 */
 	private static WebDriver defaultAutoDriver() {
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
-		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
+		setChromeOptions(options);
 		findChromeHeadless(options);
 		emulateChromeIfMobile(options);
 		return new ChromeDriver(options);
@@ -251,6 +265,9 @@ public class DriverFactory {
 		}
 	}
 
+	/**
+	 * Change web view from desktop to either tablet or phone
+	 */
 	private static void emulateChromeIfMobile(ChromeOptions options) {
 		if (mobile && deviceName != null) {
 			Map<String, String> mobileEmulation = new HashMap<>();

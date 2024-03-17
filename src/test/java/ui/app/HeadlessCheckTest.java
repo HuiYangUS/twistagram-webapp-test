@@ -3,7 +3,6 @@ package ui.app;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -24,7 +23,6 @@ public class HeadlessCheckTest extends DriverFactoryWebBase {
 	private static String url = ConfigReader.getValue("config", "url");
 
 	@Test
-	@Disabled(value = "still trying to configure headless options to allow google account to login")
 	@DisplayName("Twista Gram App Google Login Test - Headless Mode")
 	@Tags(value = { @Tag("main"), @Tag("smoke") })
 	void runTest() {
@@ -39,13 +37,14 @@ public class HeadlessCheckTest extends DriverFactoryWebBase {
 		}
 		driver.findElement(By.xpath("//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button"))
 				.click();
-		String emailXpath = String.format("//div[@data-email='%s']", ConfigReader.getValue("config", "email"));
-		driver.findElement(By.xpath(emailXpath)).click();
+		String emailXpath = String.format("//div[@data-email='%s']/..", ConfigReader.getValue("config", "email"));
+		webUtils.mouse().click(driver.findElement(By.xpath(emailXpath))).perform();
 		driver.findElement(By.xpath("//button//span[text()='Continue']/ancestor::button")).click();
 		String tempXpath = "//main/div/div/span";
 		String expectedHomeMessage = String.format("Logged in as %s", ConfigReader.getValue("config", "fullName"));
 		String actualHomeMessage = driver.findElement(By.xpath(tempXpath)).getText();
 		assertEquals(expectedHomeMessage, actualHomeMessage);
+		webUtils.savesScreenshot("headless", true);
 	}
 
 }

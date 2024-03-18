@@ -61,7 +61,7 @@ public class SimpleReportExtension
 	public void beforeEach(ExtensionContext context) throws Exception {
 		String testName = context.getDisplayName().replaceAll("[(].*[)]", "");
 		test = report.createTest(testName);
-		test.assignAuthor("Hui Yang");
+		test.assignAuthor(ConfigReader.getValue("config", "fullName"));
 		test.assignDevice(System.getProperty("os.name"));
 	}
 

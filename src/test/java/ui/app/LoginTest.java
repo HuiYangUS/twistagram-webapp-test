@@ -11,7 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ui.base.web.DriverFactoryWebBase;
-import utilities.ConfigReader;
+import utils.ConfigReader;
 
 public class LoginTest extends DriverFactoryWebBase {
 

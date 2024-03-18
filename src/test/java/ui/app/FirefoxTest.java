@@ -11,7 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ui.base.web.DriverFactoryWebBase;
-import utilities.ConfigReader;
+import utils.ConfigReader;
 
 public class FirefoxTest extends DriverFactoryWebBase {
 
@@ -20,7 +20,6 @@ public class FirefoxTest extends DriverFactoryWebBase {
 	@BeforeAll
 	static void setupHeadlessMode() {
 		System.setProperty("browser", "firefox");
-		System.setProperty("headless", "false");
 	}
 
 	@Test
@@ -49,6 +48,7 @@ public class FirefoxTest extends DriverFactoryWebBase {
 		String actualHomeMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tempXpath)))
 				.getText();
 		assertEquals(expectedHomeMessage, actualHomeMessage);
+		webUtils.savesScreenshot("firefox", true);
 	}
 
 }

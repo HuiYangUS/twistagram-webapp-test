@@ -12,13 +12,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ui.base.web.DriverFactoryWebBase;
-import utilities.ConfigReader;
+import utils.ConfigReader;
 
 public class MobilePhoneTest extends DriverFactoryWebBase {
 
 	@BeforeAll
 	static void setupMobileDevice() {
-		System.setProperty("browser", "chrome");
 		System.setProperty("mobile", "true");
 		System.setProperty("deviceName", "iPhone SE");
 	}

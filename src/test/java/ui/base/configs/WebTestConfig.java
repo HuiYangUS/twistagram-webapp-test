@@ -1,10 +1,12 @@
-package ui.base.config;
+package ui.base.configs;
 
 import java.util.Optional;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import utils.AppTestUtils;
 
 public class WebTestConfig implements BeforeEachCallback, AfterEachCallback {
 
@@ -19,10 +21,14 @@ public class WebTestConfig implements BeforeEachCallback, AfterEachCallback {
 		Optional<String> headlessData = context.getConfigurationParameter("headless");
 		if (headlessData.isPresent())
 			System.setProperty("headless", headlessData.get());
+		Optional<String> mobileData = context.getConfigurationParameter("mobile");
+		if (mobileData.isPresent())
+			System.setProperty("mobile", mobileData.get());
 	}
 
 	@Override
 	public void afterEach(ExtensionContext context) throws Exception {
+		AppTestUtils.testConfigReset();
 		String testName = context.getDisplayName().replaceAll("[(].*[)]", "");
 		if (context.getExecutionException().isPresent())
 			System.out.println(testName + " has failed.");

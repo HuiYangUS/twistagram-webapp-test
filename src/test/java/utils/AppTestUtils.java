@@ -1,4 +1,4 @@
-package utilities;
+package utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,6 +59,13 @@ public class AppTestUtils {
 
 	public static String getDateString() {
 		return LocalDate.now().toString();
+	}
+
+	public static void testConfigReset() {
+		System.clearProperty("browser");
+		System.clearProperty("auto");
+		System.clearProperty("headless");
+		System.clearProperty("mobile");
 	}
 
 	public static String getOS() {

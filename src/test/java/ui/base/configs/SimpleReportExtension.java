@@ -1,4 +1,4 @@
-package ui.base.config;
+package ui.base.configs;
 
 import java.util.Optional;
 
@@ -14,9 +14,9 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
-import utilities.ConfigReader;
-import utilities.DataManager;
-import utilities.AppTestUtils;
+import utils.AppTestUtils;
+import utils.ConfigReader;
+import utils.DataManager;
 
 public class SimpleReportExtension
 		implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {

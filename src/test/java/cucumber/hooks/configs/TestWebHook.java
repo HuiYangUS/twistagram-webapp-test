@@ -1,15 +1,14 @@
-package cucumber.hooks.config;
+package cucumber.hooks.configs;
 
 import java.util.Arrays;
 import java.util.List;
 
 import io.cucumber.java.*;
-
-import utilities.ConfigReader;
-import utilities.DataManager;
-import utilities.DriverFactory;
-import utilities.DriverManager;
-import utilities.PageManager;
+import utils.ConfigReader;
+import utils.DataManager;
+import utils.DriverFactory;
+import utils.DriverManager;
+import utils.PageManager;
 
 public class TestWebHook {
 

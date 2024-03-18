@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +20,8 @@ public class LoginTest extends DriverFactoryWebBase {
 
 	@Test
 	@DisplayName("Twista Gram App Google Login Test")
-	@Tags(value = { @Tag("main"), @Tag("smoke") })
+	@EnabledIf("utils.AppTestUtils#getDefaultTestCheck")
+	@Tags(value = { @Tag("check"), @Tag("smoke") })
 	void runTest() {
 		driver.navigate().to(url);
 		String expectedTitle = "Twistagram";

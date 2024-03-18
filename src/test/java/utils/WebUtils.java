@@ -34,7 +34,7 @@ public class WebUtils {
 		jsClick(driver.findElement(locator));
 	}
 
-	public void focusElement(WebElement element) {
+	public void elementOnFocus(WebElement element) {
 		// set element border to red and thick
 		js.executeScript("arguments[0].style.borderColor = 'red'; arguments[0].style.borderWidth = 'thick';", element);
 		AppTestUtils.pause(2);
@@ -43,8 +43,8 @@ public class WebUtils {
 		AppTestUtils.pause(1);
 	}
 
-	public void focusElement(By locator) {
-		focusElement(driver.findElement(locator));
+	public void elementOnFocus(By locator) {
+		elementOnFocus(driver.findElement(locator));
 	}
 
 	public Actions mouse() {

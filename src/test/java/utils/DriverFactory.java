@@ -44,6 +44,14 @@ public class DriverFactory {
 		return browser;
 	}
 
+	public static boolean isMobileOn() {
+		return mobile;
+	}
+
+	public static String getDeviceName() {
+		return deviceName;
+	}
+
 	private static void setUpDriver() {
 		String browserKey = "browser";
 		if (System.getProperty(browserKey) != null)

@@ -1,5 +1,5 @@
 /target/
-configs/
+**/resources/configs/
 
 ### Extent Reports ###
 extent.properties

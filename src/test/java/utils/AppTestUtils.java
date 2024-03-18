@@ -68,6 +68,10 @@ public class AppTestUtils {
 		System.clearProperty("mobile");
 	}
 
+	public static boolean getDefaultTestCheck() {
+		return Boolean.valueOf(ConfigReader.getValue("config", "check").strip().toLowerCase());
+	}
+
 	public static String getOS() {
 		return System.getProperty("os.name").toLowerCase();
 	}

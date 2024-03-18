@@ -6,7 +6,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectPackages(value = { "ui.app" })
-@IncludeTags(value = { "main" })
-public class TestSuite {
+@IncludeTags(value = { "check" })
+public class CheckTestSuite {
 
 }

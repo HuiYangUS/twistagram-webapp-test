@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -13,15 +15,20 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebUtils {
 
 	private WebDriver driver;
+	private WebDriverWait wait;
 	private Actions actions;
 	private JavascriptExecutor js;
 
 	public WebUtils(WebDriver driver) {
 		this.driver = driver;
+		wait = new WebDriverWait(driver,
+				Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("test-env", "waitTime"))));
 		actions = new Actions(driver);
 		js = (JavascriptExecutor) driver;
 	}
@@ -57,6 +64,46 @@ public class WebUtils {
 
 	public void savesScreenshot() {
 		savesScreenshot(null, false);
+	}
+
+	/**
+	 * If logged in, log out.
+	 */
+	public void appLogOut() {
+		try {
+			driver.findElement(By.linkText("Sign out")).click();
+			driver.findElement(By.id("submitButton")).click();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	/**
+	 * This method is locked out at this moment.
+	 */
+	public void testEnvLogin() {
+		// remove the line below when the problem is fixed
+		assertTrue(false, "This method is locked out at this moment.");
+		wait.until(ExpectedConditions.urlContains(ConfigReader.getValue("test-env", "url")));
+		String originWindow = driver.getWindowHandle();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ConfigReader.getValue("test-env", "id"))))
+				.click();
+		wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+		Set<String> windows = driver.getWindowHandles();
+		String targetWindow = null;
+		for (String window : windows) {
+			if (!window.equals(originWindow)) {
+				targetWindow = window;
+				break;
+			}
+		}
+		driver.switchTo().window(targetWindow);
+		driver.findElement(By.name("login")).sendKeys(ConfigReader.getValue("test-env", "username"));
+		driver.findElement(By.name("password")).sendKeys(ConfigReader.getValue("test-env", "password"));
+		driver.findElement(By.name("commit")).submit();
+		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
+		driver.switchTo().window(originWindow);
+		wait.until(ExpectedConditions.urlContains(ConfigReader.getValue("config", "url")));
 	}
 
 	public void savesScreenshot(String postfix, boolean useTimeStamp) {

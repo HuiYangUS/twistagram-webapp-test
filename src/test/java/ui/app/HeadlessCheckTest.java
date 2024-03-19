@@ -17,12 +17,12 @@ import utils.ConfigReader;
 
 public class HeadlessCheckTest extends DriverFactoryWebBase {
 
+	private static String url = ConfigReader.getValue("config", "url");
+
 	@BeforeAll
 	static void setupHeadlessMode() {
 		System.setProperty("headless", "true");
 	}
-
-	private static String url = ConfigReader.getValue("config", "url");
 
 	@Test
 	@DisplayName("Twista Gram App Google Login Test - Headless Mode")
@@ -32,12 +32,7 @@ public class HeadlessCheckTest extends DriverFactoryWebBase {
 		driver.navigate().to(url);
 		String expectedTitle = "Twistagram";
 		assertEquals(expectedTitle, driver.getTitle());
-		try {
-			driver.findElement(By.linkText("Sign out")).click();
-			driver.findElement(By.id("submitButton")).click();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		webUtils.appLogOut();
 		driver.findElement(By.xpath("//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button"))
 				.click();
 		String emailXpath = String.format("//div[@data-email='%s']/..", ConfigReader.getValue("config", "email"));

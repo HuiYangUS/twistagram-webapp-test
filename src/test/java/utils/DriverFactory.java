@@ -157,6 +157,7 @@ public class DriverFactory {
 			driver = getDefaultLocalDriver();
 			break;
 		case "edge":
+			checkForEdge();
 			String edgeDriverFilePath = getDriverDir() + "/edgedriver/msedgedriver"
 					+ (AppTestUtils.isWindows() ? ".exe" : "");
 			EdgeDriverService edgeService = new EdgeDriverService.Builder()
@@ -205,12 +206,44 @@ public class DriverFactory {
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
 		options.addArguments("--no-sandbox");
-		useChromeProfile(options);
+		if (Boolean.valueOf(ConfigReader.getValue("config", "test")))
+			useChromeForTest(options);
+		else
+			useChromeProfile(options);
 	}
 
 	private static void useChromeProfile(ChromeOptions options) {
 		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
 		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "profile")));
+	}
+
+	private static void useChromeForTest(ChromeOptions options) {
+		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "testUserData")));
+		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
+		options.setBinary(ConfigReader.getValue("config", "testChromeBin"));
+	}
+
+	private static void findChromeHeadless(ChromeOptions options) {
+		if (headless) {
+			options.addArguments("--headless=new");
+			options.addArguments("--user-agent=" + ConfigReader.getValue("config", "userAgent"));
+		}
+	}
+
+	/**
+	 * Change web view from desktop to either tablet or phone
+	 */
+	private static void emulateChromeIfMobile(ChromeOptions options) {
+		if (mobile && deviceName != null) {
+			Map<String, String> mobileEmulation = new HashMap<>();
+			mobileEmulation.put("deviceName", deviceName);
+			options.setExperimentalOption("mobileEmulation", mobileEmulation);
+		}
+	}
+
+	private static void checkForEdge() {
+		assertTrue(AppTestUtils.isWindows(), "Edge Driver can only used in Windows machines.");
+		assertTrue(false, "I am not working on any Edge Testing right now.");
 	}
 
 	/**
@@ -237,6 +270,10 @@ public class DriverFactory {
 		firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
 	}
 
+	private static void checkForSafari() {
+		assertTrue(AppTestUtils.isMac(), "Safari Driver can only used in Mac machines.");
+	}
+
 	/**
 	 * Auto driver is updated automatically using Selenium Manager
 	 */
@@ -248,6 +285,7 @@ public class DriverFactory {
 			driver = defaultAutoDriver();
 			break;
 		case "edge":
+			checkForEdge();
 			EdgeOptions edgeOptions = new EdgeOptions();
 			setEdgeOptions(edgeOptions);
 			findEdgeHeadless(edgeOptions);
@@ -279,24 +317,6 @@ public class DriverFactory {
 		return new ChromeDriver(options);
 	}
 
-	private static void findChromeHeadless(ChromeOptions options) {
-		if (headless) {
-			options.addArguments("--headless=new");
-			options.addArguments("--user-agent=" + ConfigReader.getValue("config", "userAgent"));
-		}
-	}
-
-	/**
-	 * Change web view from desktop to either tablet or phone
-	 */
-	private static void emulateChromeIfMobile(ChromeOptions options) {
-		if (mobile && deviceName != null) {
-			Map<String, String> mobileEmulation = new HashMap<>();
-			mobileEmulation.put("deviceName", deviceName);
-			options.setExperimentalOption("mobileEmulation", mobileEmulation);
-		}
-	}
-
 	private static void findEdgeHeadless(EdgeOptions options) {
 		if (headless)
 			options.addArguments("--headless=new");
@@ -305,10 +325,6 @@ public class DriverFactory {
 	private static void findFirefoxHeadless(FirefoxOptions options) {
 		if (headless)
 			options.addArguments("-headless");
-	}
-
-	private static void checkForSafari() {
-		assertTrue(AppTestUtils.isMac(), "Safari Driver can only used in Mac machines.");
 	}
 
 	/**

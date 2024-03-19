@@ -41,6 +41,9 @@ public class WebUtils {
 		jsClick(driver.findElement(locator));
 	}
 
+	/**
+	 * Change border of an element to be thick and red
+	 */
 	public void elementOnFocus(WebElement element) {
 		// set element border to red and thick
 		js.executeScript("arguments[0].style.borderColor = 'red'; arguments[0].style.borderWidth = 'thick';", element);
@@ -67,7 +70,7 @@ public class WebUtils {
 	}
 
 	/**
-	 * If logged in, log out.
+	 * If the user is logged in, log out.
 	 */
 	public void appLogOut() {
 		try {
@@ -106,6 +109,9 @@ public class WebUtils {
 		wait.until(ExpectedConditions.urlContains(ConfigReader.getValue("config", "url")));
 	}
 
+	/**
+	 * Takes a screenshot and stores in the "target" folder
+	 */
 	public void savesScreenshot(String postfix, boolean useTimeStamp) {
 		String tail = "-" + postfix;
 		if (postfix == null)

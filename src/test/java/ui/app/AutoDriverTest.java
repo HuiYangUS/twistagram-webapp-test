@@ -32,12 +32,7 @@ public class AutoDriverTest extends DriverFactoryWebBase {
 		driver.navigate().to(url);
 		String expectedTitle = "Twistagram";
 		assertEquals(expectedTitle, driver.getTitle());
-		try {
-			driver.findElement(By.linkText("Sign out")).click();
-			driver.findElement(By.id("submitButton")).click();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		webUtils.appLogOut();
 		driver.findElement(By.xpath("//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button"))
 				.click();
 		String emailXpath = String.format("//div[@data-email='%s']/..", ConfigReader.getValue("config", "email"));

@@ -177,6 +177,8 @@ public class DriverFactory {
 			driver = new FirefoxDriver(firefoxService, firefoxOptions);
 			break;
 		case "safari":
+			checkForSafari();
+			assertTrue(false, "Manual update for Safari Driver is not necessary.");
 		default:
 			driver = getDefaultLocalDriver();
 			break;
@@ -202,8 +204,13 @@ public class DriverFactory {
 	 * Set specific conditions of <Chrome> for this application
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
+		options.addArguments("--no-sandbox");
+		useChromeProfile(options);
+	}
+
+	private static void useChromeProfile(ChromeOptions options) {
 		options.addArguments(String.format("--user-data-dir=%s", ConfigReader.getValue("config", "userData")));
-		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "testProfile")));
+		options.addArguments(String.format("--profile-directory=%s", ConfigReader.getValue("config", "profile")));
 	}
 
 	/**
@@ -223,6 +230,10 @@ public class DriverFactory {
 	private static void setFirefoxOptions(FirefoxOptions firefoxOptions) {
 		// turn off geographical locator
 		firefoxOptions.addPreference("geo.enabled", false);
+		useFirefoxProfile(firefoxOptions);
+	}
+
+	private static void useFirefoxProfile(FirefoxOptions firefoxOptions) {
 		firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
 	}
 
@@ -249,6 +260,8 @@ public class DriverFactory {
 			driver = new FirefoxDriver(firefoxOptions);
 			break;
 		case "safari":
+			checkForSafari();
+			assertTrue(false, "Tesing for Safari is not available right now.");
 		default:
 			driver = defaultAutoDriver();
 			break;
@@ -292,6 +305,10 @@ public class DriverFactory {
 	private static void findFirefoxHeadless(FirefoxOptions options) {
 		if (headless)
 			options.addArguments("-headless");
+	}
+
+	private static void checkForSafari() {
+		assertTrue(AppTestUtils.isMac(), "Safari Driver can only used in Mac machines.");
 	}
 
 	/**

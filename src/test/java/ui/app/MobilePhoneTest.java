@@ -17,13 +17,13 @@ import utils.ConfigReader;
 
 public class MobilePhoneTest extends DriverFactoryWebBase {
 
+	private static String url = ConfigReader.getValue("config", "url");
+
 	@BeforeAll
 	static void setupMobileDevice() {
 		System.setProperty("mobile", "true");
 		System.setProperty("deviceName", "iPhone SE");
 	}
-
-	private static String url = ConfigReader.getValue("config", "url");
 
 	@Test
 	@DisplayName("Twista Gram App Google Login Test - Phone Edition")
@@ -33,12 +33,7 @@ public class MobilePhoneTest extends DriverFactoryWebBase {
 		driver.navigate().to(url);
 		String expectedTitle = "Twistagram";
 		assertEquals(expectedTitle, driver.getTitle());
-		try {
-			driver.findElement(By.linkText("Sign out")).click();
-			driver.findElement(By.id("submitButton")).click();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		webUtils.appLogOut();
 		driver.findElement(By.xpath("//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button"))
 				.click();
 		String emailXpath = String.format("//div[@data-email='%s']/..", ConfigReader.getValue("config", "email"));

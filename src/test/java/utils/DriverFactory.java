@@ -206,7 +206,7 @@ public class DriverFactory {
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
 		options.addArguments("--no-sandbox");
-		if (Boolean.valueOf(ConfigReader.getValue("config", "test")))
+		if (Boolean.valueOf(ConfigReader.getValue("config", "useTestChrome")))
 			useChromeForTest(options);
 		else
 			useChromeProfile(options);
@@ -264,10 +264,18 @@ public class DriverFactory {
 		// turn off geographical locator
 		firefoxOptions.addPreference("geo.enabled", false);
 		useFirefoxProfile(firefoxOptions);
+		String firefoxBin = ConfigReader.getValue("config", "firefoxBin");
+		if (firefoxBin != null)
+			firefoxOptions.setBinary(firefoxBin);
 	}
 
 	private static void useFirefoxProfile(FirefoxOptions firefoxOptions) {
 		firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", "firefoxProfile"));
+	}
+
+	private static void findFirefoxHeadless(FirefoxOptions options) {
+		if (headless)
+			options.addArguments("-headless");
 	}
 
 	private static void checkForSafari() {
@@ -320,11 +328,6 @@ public class DriverFactory {
 	private static void findEdgeHeadless(EdgeOptions options) {
 		if (headless)
 			options.addArguments("--headless=new");
-	}
-
-	private static void findFirefoxHeadless(FirefoxOptions options) {
-		if (headless)
-			options.addArguments("-headless");
 	}
 
 	/**

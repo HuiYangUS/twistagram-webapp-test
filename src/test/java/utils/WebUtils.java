@@ -27,8 +27,7 @@ public class WebUtils {
 
 	public WebUtils(WebDriver driver) {
 		this.driver = driver;
-		wait = new WebDriverWait(driver,
-				Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("test-env", "waitTime"))));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
 		actions = new Actions(driver);
 		js = (JavascriptExecutor) driver;
 	}

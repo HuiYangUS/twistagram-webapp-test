@@ -2,6 +2,7 @@ package ui.demo;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -22,6 +23,7 @@ public class DemoTest extends DriverFactoryWebBase {
 
 	@Test
 	@DisplayName("Twista Gram App Google Demo Test")
+	@Disabled(value = "Legacy issue was resolved. This test is not needed at this moment.")
 	@EnabledIf("isDemoTime")
 	@Tags(value = { @Tag("demo"), @Tag("smoke") })
 	void runTest() {

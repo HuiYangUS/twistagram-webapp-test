@@ -7,7 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.condition.OS;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,6 +28,7 @@ public class FirefoxTest extends DriverFactoryWebBase {
 
 	@Test
 	@DisplayName("Twista Gram App Google Login Test - Firefox Edition")
+	@DisabledOnOs(value = OS.LINUX, disabledReason = "On Linux, GeckoDriver is not enabled setup Firefox Profile at this moment.")
 	@EnabledIf("utils.AppTestUtils#getDefaultTestCheck")
 	@Tags(value = { @Tag("check"), @Tag("smoke") })
 	void runTest() {

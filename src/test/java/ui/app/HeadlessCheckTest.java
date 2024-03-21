@@ -27,7 +27,7 @@ public class HeadlessCheckTest extends DriverFactoryWebBase {
 	@Test
 	@DisplayName("Twista Gram App Google Login Test - Headless Mode")
 	@EnabledIf("utils.AppTestUtils#getDefaultTestCheck")
-	@Tags(value = { @Tag("check"), @Tag("smoke") })
+	@Tags(value = { @Tag("check"), @Tag("sanity") })
 	void runTest() {
 		driver.navigate().to(url);
 		String expectedTitle = "Twistagram";

@@ -2,3 +2,5 @@
 - Then create a `config.properties` file under this folder.
 - Please contact [@HuiYangUS](https://github.com/HuiYangUS) for default values for `config.properties`.
 - In order to test `Twistagram`, a local chrome profile must be setup and all chrome browsers must be closed.
+- `Chrome For Test` is highly recommended in order to avoid updating `Selenium` regularly. 
+- Current `Selenium - 4.18.1` uses DevTools `v120`, `v121`, `v122`.

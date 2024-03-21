@@ -2,6 +2,7 @@ package ui.app;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -17,6 +18,11 @@ import utils.ConfigReader;
 public class LoginTest extends DriverFactoryWebBase {
 
 	private static String url = ConfigReader.getValue("config", "url");
+
+	@BeforeAll
+	static void useDefaultBrowser() {
+		System.clearProperty("browser");
+	}
 
 	@Test
 	@DisplayName("Twista Gram App Google Login Test")

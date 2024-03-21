@@ -16,3 +16,7 @@ pdf-config.yaml
 
 ### Mac OS ###
 .DS_Store
+
+### misc ###
+/.apt_generated/
+/.apt_generated_tests/

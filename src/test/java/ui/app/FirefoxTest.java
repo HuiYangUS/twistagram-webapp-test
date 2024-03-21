@@ -28,9 +28,9 @@ public class FirefoxTest extends DriverFactoryWebBase {
 
 	@Test
 	@DisplayName("Twista Gram App Google Login Test - Firefox Edition")
-	@DisabledOnOs(value = OS.LINUX, disabledReason = "On Linux, GeckoDriver is not enabled setup Firefox Profile at this moment.")
+	@DisabledOnOs(value = OS.LINUX, disabledReason = "On Linux, GeckoDriver is not enabled to setup Firefox Profile at this moment (v34).")
 	@EnabledIf("utils.AppTestUtils#getDefaultTestCheck")
-	@Tags(value = { @Tag("check"), @Tag("smoke") })
+	@Tags(value = { @Tag("check"), @Tag("sanity") })
 	void runTest() {
 		driver.navigate().to(url);
 		String expectedTitle = "Twistagram";

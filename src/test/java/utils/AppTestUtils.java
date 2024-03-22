@@ -63,7 +63,6 @@ public class AppTestUtils {
 
 	public static void testConfigReset() {
 		System.clearProperty("browser");
-		System.clearProperty("auto");
 		System.clearProperty("headless");
 		System.clearProperty("mobile");
 	}

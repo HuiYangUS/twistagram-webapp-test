@@ -8,8 +8,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import ui.base.configs.SimpleReportExtension;
-import ui.base.configs.WebTestConfig;
+import ui.base.config.WebTestConfig;
+import ui.base.config.SimpleReportExtension;
+import utils.ConfigReader;
 import utils.DriverManager;
 import utils.PageManager;
 import utils.WebUtils;
@@ -25,7 +26,7 @@ public class DriverFactoryWebBase {
 	@BeforeEach
 	protected void setUp() {
 		driver = DriverManager.getDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
 		pages = PageManager.getInstance();
 		webUtils = new WebUtils(driver);
 	}

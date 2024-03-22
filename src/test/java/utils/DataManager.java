@@ -4,17 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DataManager {
 
-	private static int count;
 	private static ThreadLocal<DataManager> localDataManager;
 	private static String password;
-	private static WebUtils webUtils;
+	private WebUtils webUtils;
 
 	private DataManager() {
-		count++;
-	}
-
-	public static int getCount() {
-		return count;
+		// Nothing should be written here.
 	}
 
 	public static DataManager getInstance() {
@@ -39,7 +34,7 @@ public class DataManager {
 		DataManager.password = password;
 	}
 
-	public static WebUtils getWebUtils() {
+	public WebUtils webUtils() {
 		if (webUtils == null)
 			webUtils = new WebUtils(DriverManager.getDriver());
 		return webUtils;

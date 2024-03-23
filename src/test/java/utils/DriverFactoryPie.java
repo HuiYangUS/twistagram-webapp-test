@@ -27,9 +27,9 @@ public class DriverFactoryPie {
 	private static ThreadLocal<WebDriver> localDriver;
 
 	private static String browser = ConfigReader.getValue("config", "browser").toLowerCase();
-	private static boolean headless;
-	private static boolean mobile;
-	private static String deviceName;
+	private static boolean headless = Boolean.valueOf(ConfigReader.getValue("config", "headless").toLowerCase());
+	private static boolean mobile = Boolean.valueOf(ConfigReader.getValue("config", "mobile").toLowerCase());
+	private static String deviceName = ConfigReader.getValue("config", "deviceName");
 	private static boolean isSet;
 	private static int waitTime = 5;
 

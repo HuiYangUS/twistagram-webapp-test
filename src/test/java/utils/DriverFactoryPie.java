@@ -29,7 +29,6 @@ public class DriverFactoryPie {
 
 	private static String browser = ConfigReader.getValue("config", "browser").toLowerCase();
 	private static boolean headless = Boolean.valueOf(ConfigReader.getValue("config", "headless").toLowerCase());
-	private static boolean mobile = Boolean.valueOf(ConfigReader.getValue("config", "mobile").toLowerCase());
 	private static String deviceName = ConfigReader.getValue("config", "deviceName");
 	private static boolean isSet;
 	private static int waitTime = 5;
@@ -45,6 +44,9 @@ public class DriverFactoryPie {
 		String headlessKey = "headless";
 		if (System.getProperty(headlessKey) != null)
 			headless = Boolean.valueOf(System.getProperty(headlessKey).toLowerCase());
+		String deviceNameKey = "deviceName";
+		if (System.getProperty(deviceNameKey) != null)
+			deviceName = System.getProperty(deviceNameKey);
 		isSet = true;
 	}
 
@@ -148,7 +150,7 @@ public class DriverFactoryPie {
 	 * Change web view from desktop to either tablet or phone
 	 */
 	private static void emulateChromeIfMobile(ChromeOptions chromeOptions) {
-		if (mobile && deviceName != null) {
+		if (deviceName != null) {
 			Map<String, String> mobileEmulation = new HashMap<>();
 			mobileEmulation.put("deviceName", deviceName);
 			chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);

@@ -64,7 +64,7 @@ public class AppTestUtils {
 	public static void testConfigReset() {
 		System.clearProperty("browser");
 		System.clearProperty("headless");
-		System.clearProperty("mobile");
+		System.clearProperty("deviceName");
 	}
 
 	public static boolean getDefaultTestCheck() {

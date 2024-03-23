@@ -25,7 +25,7 @@ public class LoginSteps {
 
 	private static String url = ConfigReader.getValue("config", "url");
 
-	@Given("user navigates to [Twistagram] application")
+	@Given("user navigates to [TwistaGram] application")
 	public void user_navigates_to_twistagram_application() {
 		driver.navigate().to(url);
 	}

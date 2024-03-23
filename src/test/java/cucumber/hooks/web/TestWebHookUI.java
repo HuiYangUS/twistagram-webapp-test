@@ -8,18 +8,17 @@ import utils.ConfigReader;
 import utils.DataManager;
 import utils.DriverManager;
 import utils.PageManager;
-import utils.TestConditions;
 
 public class TestWebHookUI {
 
 	@Before(order = 1, value = "@chrome")
 	public void setupChrome() {
-		TestConditions.browser = "chrome";
+		System.setProperty("browser", "chrome");
 	}
 
 	@Before(order = 1, value = "@firefox")
 	public void setupFirefox() {
-		TestConditions.browser = "firefox";
+		System.setProperty("browser", "firefox");
 	}
 
 	@Before(order = 2, value = "@ui or @web or @e2e")

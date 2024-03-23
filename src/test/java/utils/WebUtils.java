@@ -56,11 +56,7 @@ public class WebUtils {
 		elementOnFocus(driver.findElement(locator));
 	}
 
-	public Actions mouse() {
-		return actions;
-	}
-
-	public Actions keyboard() {
+	public Actions useMouseOrKey() {
 		return actions;
 	}
 
@@ -72,6 +68,8 @@ public class WebUtils {
 	 * If the user is logged in, log out.
 	 */
 	public void appLogOut() {
+		// remove the line below when the problem is fixed
+		fail("Legacy: no longer required but remain as study material.");
 		try {
 			driver.findElement(By.linkText("Sign out")).click();
 			driver.findElement(By.id("submitButton")).click();
@@ -80,12 +78,9 @@ public class WebUtils {
 		}
 	}
 
-	/**
-	 * This method is locked out at this moment.
-	 */
 	public void testEnvLogin() {
 		// remove the line below when the problem is fixed
-		assertTrue(false, "This method is locked out at this moment.");
+		fail("Legacy: no longer required but remain as study material.");
 		wait.until(ExpectedConditions.urlContains(ConfigReader.getValue("test-env", "url")));
 		String originWindow = driver.getWindowHandle();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ConfigReader.getValue("test-env", "id"))))

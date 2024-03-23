@@ -16,6 +16,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 
+/**
+ * This <DriverFactory> class uses Selenium-4. Drivers are updated automatically
+ * by Selenium Manager.
+ */
 public class DriverFactoryM {
 
 	private static ThreadLocal<WebDriver> localDriver;
@@ -32,6 +36,12 @@ public class DriverFactoryM {
 	}
 
 	private static void setUpDriver() {
+		String browserKey = "browser";
+		if (System.getProperty(browserKey) != null)
+			browser = System.getProperty(browserKey).toLowerCase();
+		String headlessKey = "headless";
+		if (System.getProperty(headlessKey) != null)
+			headless = Boolean.valueOf(System.getProperty(headlessKey).toLowerCase());
 		isSet = true;
 	}
 
@@ -51,6 +61,7 @@ public class DriverFactoryM {
 			localDriver.remove();
 		}
 		isSet = false;
+		AppTestUtils.testConfigReset();
 	}
 
 	private static void configDriver(WebDriver driver) {

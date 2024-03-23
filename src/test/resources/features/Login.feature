@@ -2,8 +2,8 @@
 Feature: Login
 
   @happy @google @smoke @test @ui
-  Scenario: Log in [Twistagram] app using [Google] credentials
-    Given user navigates to [Twistagram] application
+  Scenario: Log in [TwistaGram] app using [Google] credentials
+    Given user navigates to [TwistaGram] application
     When user clicks on [Log in with Google] button
     And user enters gmail
     And user enters gmail password

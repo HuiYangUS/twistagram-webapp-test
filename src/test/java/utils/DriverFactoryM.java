@@ -88,7 +88,8 @@ public class DriverFactoryM {
 			fail("No such browser in the system.");
 			break;
 		}
-		System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
+		if (driver != null)
+			System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
 		configDriver(driver);
 		return driver;
 	}

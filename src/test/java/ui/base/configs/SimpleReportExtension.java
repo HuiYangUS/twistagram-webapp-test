@@ -1,4 +1,4 @@
-package ui.base.config;
+package ui.base.configs;
 
 import java.util.Optional;
 

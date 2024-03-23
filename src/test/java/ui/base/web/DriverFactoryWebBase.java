@@ -8,8 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import ui.base.config.WebTestConfig;
-import ui.base.config.SimpleReportExtension;
+import ui.base.configs.SimpleReportExtension;
+import ui.base.configs.WebTestConfig;
 import utils.ConfigReader;
 import utils.DriverManager;
 import utils.PageManager;

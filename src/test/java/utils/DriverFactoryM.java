@@ -21,9 +21,9 @@ public class DriverFactoryM {
 	private static ThreadLocal<WebDriver> localDriver;
 
 	private static String browser = ConfigReader.getValue("config", "browser").toLowerCase();
-	private static boolean headless;
-	private static boolean mobile;
-	private static String deviceName;
+	private static boolean headless = Boolean.valueOf(ConfigReader.getValue("config", "headless").toLowerCase());
+	private static boolean mobile = Boolean.valueOf(ConfigReader.getValue("config", "mobile").toLowerCase());
+	private static String deviceName = ConfigReader.getValue("config", "deviceName");
 	private static boolean isSet;
 	private static int waitTime = 5;
 
@@ -88,7 +88,8 @@ public class DriverFactoryM {
 			fail("No such browser in the system.");
 			break;
 		}
-		System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
+		if (driver != null)
+			System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
 		configDriver(driver);
 		return driver;
 	}

@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 public class DriverManager {
 
 	private DriverManager() {
-		// Nothing should be written here.
+		// WARN: Nothing should be written here.
 	}
 
 	public static WebDriver getDriver() {
-		String driverFactoryType = ConfigReader.getValue("config", "driverFactoryType");
+		String driverFactoryType = ConfigReader.getTextValue("config", "driverFactoryType");
 		if (driverFactoryType.equalsIgnoreCase("p") || driverFactoryType.equalsIgnoreCase("pie")) {
 			return DriverFactoryPie.getDriver();
 		}

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import utils.AppTestUtils;
 import utils.ConfigReader;
 import utils.DriverManager;
 
@@ -20,7 +21,7 @@ public class GoogleAccountPage {
 	private WebDriverWait wait;
 
 	private static String url = "https://accounts.google.com/";
-	private static String email = ConfigReader.getValue("config", "email");
+	private static String email = ConfigReader.getTextValue("config", "email");
 
 	@FindBy(xpath = "//input[@type='email']")
 	private WebElement googleEmailInput;
@@ -36,21 +37,21 @@ public class GoogleAccountPage {
 
 	public GoogleAccountPage() {
 		driver = DriverManager.getDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(AppTestUtils.getTestConfigWaitTime()));
 		PageFactory.initElements(driver, this);
 	}
 
 	public void enterGoogleEmail() {
 		wait.until(ExpectedConditions.urlContains(url));
 		wait.until(ExpectedConditions.visibilityOf(googleEmailInput))
-				.sendKeys(ConfigReader.getValue("config", "email") + Keys.ENTER);
+				.sendKeys(ConfigReader.getTextValue("config", "email") + Keys.ENTER);
 	}
 
 	public void enterPassword() {
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector(String.format("[data-email='%s']", email))));
 		wait.until(ExpectedConditions.visibilityOf(passwordInput))
-				.sendKeys(ConfigReader.getValue("config", "password") + Keys.ENTER);
+				.sendKeys(ConfigReader.getTextValue("config", "password") + Keys.ENTER);
 	}
 
 	public void confirmByClickContinue() {

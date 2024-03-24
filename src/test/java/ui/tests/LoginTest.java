@@ -15,9 +15,9 @@ import utils.ConfigReader;
 
 public class LoginTest extends DriverFactoryWebBase {
 
-	private static boolean demo = Boolean.valueOf(ConfigReader.getValue("config", "demo").toLowerCase());
+	private static boolean demo = AppTestUtils.isDemoTest();
 
-	private static String url = ConfigReader.getValue("config", "url");
+	private static String url = ConfigReader.getTextValue("config", "url");
 
 	@Test
 	@DisplayName("TwistaGram Google Login Test")
@@ -34,6 +34,7 @@ public class LoginTest extends DriverFactoryWebBase {
 		System.out.println(pages.homePage().getLoggedInText());
 		if (demo)
 			AppTestUtils.pause(3);
+		webUtils.savesScreenshot("demo", true);
 	}
 
 	static boolean isDemo() {

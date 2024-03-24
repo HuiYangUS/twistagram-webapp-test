@@ -1,4 +1,4 @@
-package ui.base.config;
+package ui.base.configs;
 
 import java.util.Optional;
 
@@ -18,6 +18,9 @@ public class WebTestConfig implements BeforeEachCallback, AfterEachCallback {
 		Optional<String> headlessData = context.getConfigurationParameter("headless");
 		if (headlessData.isPresent())
 			System.setProperty("headless", headlessData.get());
+		Optional<String> deviceData = context.getConfigurationParameter("deviceName");
+		if (deviceData.isPresent())
+			System.setProperty("deviceName", deviceData.get());
 	}
 
 	@Override

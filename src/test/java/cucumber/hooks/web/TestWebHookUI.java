@@ -55,7 +55,7 @@ public class TestWebHookUI {
 	@After(order = 2, value = "@ui or @web or @e2e or @phone or @tablet")
 	public void tearDown(Scenario scenario) {
 		DataManager dataManager = DataManager.getInstance();
-		if (Boolean.valueOf(ConfigReader.getValue("config", "screenshot")) && scenario.isFailed())
+		if (ConfigReader.getBooleanValue("config", "screenshot") && scenario.isFailed())
 			dataManager.webUtils().savesScreenshot();
 		DriverManager.reset();
 		PageManager.reset();

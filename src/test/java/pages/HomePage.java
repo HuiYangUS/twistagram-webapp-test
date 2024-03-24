@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import utils.ConfigReader;
+import utils.AppTestUtils;
 import utils.DriverManager;
 
 public class HomePage {
@@ -22,7 +22,7 @@ public class HomePage {
 
 	public HomePage() {
 		driver = DriverManager.getDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(AppTestUtils.getTestConfigWaitTime()));
 		PageFactory.initElements(driver, this);
 	}
 

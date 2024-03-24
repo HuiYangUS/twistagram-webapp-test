@@ -111,9 +111,7 @@ public class DriverFactoryM {
 	 * Set specific conditions of <Chrome> for this application
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
-		options.addArguments("--no-sandbox");
-		if (ConfigReader.getBooleanValue("config", "incognito"))
-			options.addArguments("--incognito");
+		options.addArguments("--guest");
 		String chromeUserDataPath = ConfigReader.getTextValue("config", "chromeUserDataPath");
 		if (chromeUserDataPath != null) {
 			options.addArguments(String.format("--user-data-dir=%s", chromeUserDataPath));

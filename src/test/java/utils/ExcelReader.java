@@ -55,7 +55,7 @@ public class ExcelReader extends TestDataReader {
 		try {
 			return new XSSFWorkbook(new FileInputStream(filePath));
 		} catch (Exception e) {
-			assertTrue(false, "No excel file is found.");
+			fail("No excel file is found.");
 			return null;
 		}
 	}
@@ -65,7 +65,7 @@ public class ExcelReader extends TestDataReader {
 			if (workbook != null)
 				workbook.close();
 		} catch (Exception e) {
-			assertTrue(false, "Workbook for excel failed to close.");
+			fail("Workbook for excel failed to close.");
 		}
 	}
 

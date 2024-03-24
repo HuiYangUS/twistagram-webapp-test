@@ -16,22 +16,34 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 
+/**
+ * This <DriverFactory> class uses Selenium-4. Drivers are updated automatically
+ * by Selenium Manager.
+ */
 public class DriverFactoryM {
 
 	private static ThreadLocal<WebDriver> localDriver;
 
-	private static String browser = ConfigReader.getValue("config", "browser").toLowerCase();
-	private static boolean headless;
-	private static boolean mobile;
-	private static String deviceName;
+	private static String browser = AppTestUtils.getTestConfigBrowserName();
+	private static boolean headless = ConfigReader.getBooleanValue("config", "headless");
+	private static String deviceName = ConfigReader.getTextValue("config", "deviceName");
 	private static boolean isSet;
 	private static int waitTime = 5;
 
 	private DriverFactoryM() {
-		// Nothing should be written here.
+		// WARN: Nothing should be written here.
 	}
 
 	private static void setUpDriver() {
+		String browserKey = "browser";
+		if (System.getProperty(browserKey) != null)
+			browser = System.getProperty(browserKey).toLowerCase();
+		String headlessKey = "headless";
+		if (System.getProperty(headlessKey) != null)
+			headless = Boolean.valueOf(System.getProperty(headlessKey).toLowerCase());
+		String deviceNameKey = "deviceName";
+		if (System.getProperty(deviceNameKey) != null)
+			deviceName = System.getProperty(deviceNameKey);
 		isSet = true;
 	}
 
@@ -47,10 +59,12 @@ public class DriverFactoryM {
 
 	public static void reset() {
 		if (localDriver != null && localDriver.get() != null) {
+			localDriver.get().close();
 			localDriver.get().quit();
 			localDriver.remove();
 		}
 		isSet = false;
+		AppTestUtils.testConfigReset();
 	}
 
 	private static void configDriver(WebDriver driver) {
@@ -88,7 +102,8 @@ public class DriverFactoryM {
 			fail("No such browser in the system.");
 			break;
 		}
-		System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
+		if (driver != null)
+			System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
 		configDriver(driver);
 		return driver;
 	}
@@ -98,20 +113,20 @@ public class DriverFactoryM {
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
 		options.addArguments("--no-sandbox");
-		if (Boolean.valueOf(ConfigReader.getValue("config", "incognito").toLowerCase()))
+		if (ConfigReader.getBooleanValue("config", "incognito"))
 			options.addArguments("--incognito");
-		String chromeUserDataPath = ConfigReader.getValue("config", "chromeUserDataPath");
+		String chromeUserDataPath = ConfigReader.getTextValue("config", "chromeUserDataPath");
 		if (chromeUserDataPath != null) {
 			options.addArguments(String.format("--user-data-dir=%s", chromeUserDataPath));
 			options.addArguments(
-					String.format("--profile-directory=%s", ConfigReader.getValue("config", "chromeProfile")));
+					String.format("--profile-directory=%s", ConfigReader.getTextValue("config", "chromeProfile")));
 		}
 	}
 
 	private static void findChromeHeadless(ChromeOptions options) {
 		if (headless) {
 			options.addArguments("--headless=new");
-			options.addArguments("--user-agent=" + ConfigReader.getValue("config", "chromeUserAgent"));
+			options.addArguments("--user-agent=" + ConfigReader.getTextValue("config", "chromeUserAgent"));
 		}
 	}
 
@@ -119,7 +134,7 @@ public class DriverFactoryM {
 	 * Change web view from desktop to either tablet or phone
 	 */
 	private static void emulateChromeIfMobile(ChromeOptions chromeOptions) {
-		if (mobile && deviceName != null) {
+		if (deviceName != null) {
 			Map<String, String> mobileEmulation = new HashMap<>();
 			mobileEmulation.put("deviceName", deviceName);
 			chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
@@ -149,15 +164,15 @@ public class DriverFactoryM {
 		// turn off geographical locator
 		firefoxOptions.addPreference("geo.enabled", false);
 		useFirefoxProfile(firefoxOptions);
-		String firefoxBinPath = ConfigReader.getValue("config", "firefoxProfilePath");
+		String firefoxBinPath = ConfigReader.getTextValue("config", "firefoxBinPath");
 		if (firefoxBinPath != null)
 			firefoxOptions.setBinary(firefoxBinPath);
 	}
 
 	private static void useFirefoxProfile(FirefoxOptions firefoxOptions) {
-		String firefoxProfilePath = ConfigReader.getValue("config", "firefoxProfilePath");
+		String firefoxProfilePath = ConfigReader.getTextValue("config", "firefoxProfilePath");
 		if (firefoxProfilePath != null)
-			firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", firefoxProfilePath));
+			firefoxOptions.addArguments("-profile", ConfigReader.getTextValue("config", firefoxProfilePath));
 	}
 
 	private static void findFirefoxHeadless(FirefoxOptions options) {

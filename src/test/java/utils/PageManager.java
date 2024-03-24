@@ -14,7 +14,7 @@ public class PageManager {
 	private HomePage homePage;
 
 	private PageManager() {
-		// Nothing should be written here.
+		// WARN: Nothing should be written here.
 	}
 
 	public static synchronized PageManager getInstance() {

@@ -27,7 +27,7 @@ public class WebUtils {
 
 	public WebUtils(WebDriver driver) {
 		this.driver = driver;
-		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(AppTestUtils.getTestConfigWaitTime()));
 		actions = new Actions(driver);
 		js = (JavascriptExecutor) driver;
 	}
@@ -56,11 +56,7 @@ public class WebUtils {
 		elementOnFocus(driver.findElement(locator));
 	}
 
-	public Actions mouse() {
-		return actions;
-	}
-
-	public Actions keyboard() {
+	public Actions useMouseOrKey() {
 		return actions;
 	}
 
@@ -72,23 +68,22 @@ public class WebUtils {
 	 * If the user is logged in, log out.
 	 */
 	public void appLogOut() {
+		// remove the line below when the problem is fixed
+		fail("Legacy: no longer required but remain as study material.");
 		try {
 			driver.findElement(By.linkText("Sign out")).click();
 			driver.findElement(By.id("submitButton")).click();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("User is already logged in.");
 		}
 	}
 
-	/**
-	 * This method is locked out at this moment.
-	 */
 	public void testEnvLogin() {
 		// remove the line below when the problem is fixed
-		assertTrue(false, "This method is locked out at this moment.");
-		wait.until(ExpectedConditions.urlContains(ConfigReader.getValue("test-env", "url")));
+		fail("Legacy: no longer required but remain as study material.");
+		wait.until(ExpectedConditions.urlContains(ConfigReader.getTextValue("test-env", "url")));
 		String originWindow = driver.getWindowHandle();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ConfigReader.getValue("test-env", "id"))))
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ConfigReader.getTextValue("test-env", "id"))))
 				.click();
 		wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 		Set<String> windows = driver.getWindowHandles();
@@ -100,12 +95,12 @@ public class WebUtils {
 			}
 		}
 		driver.switchTo().window(targetWindow);
-		driver.findElement(By.name("login")).sendKeys(ConfigReader.getValue("test-env", "username"));
-		driver.findElement(By.name("password")).sendKeys(ConfigReader.getValue("test-env", "password"));
+		driver.findElement(By.name("login")).sendKeys(ConfigReader.getTextValue("test-env", "username"));
+		driver.findElement(By.name("password")).sendKeys(ConfigReader.getTextValue("test-env", "password"));
 		driver.findElement(By.name("commit")).submit();
 		wait.until(ExpectedConditions.numberOfWindowsToBe(1));
 		driver.switchTo().window(originWindow);
-		wait.until(ExpectedConditions.urlContains(ConfigReader.getValue("config", "url")));
+		wait.until(ExpectedConditions.urlContains(ConfigReader.getTextValue("config", "url")));
 	}
 
 	/**
@@ -122,7 +117,7 @@ public class WebUtils {
 		try {
 			FileUtils.copyFile(imgData, new File(String.format("target/webpage-screenshots/screenshot%s.png", tail)));
 		} catch (IOException e) {
-			assertTrue(false, "Failed to capture the screenshot.");
+			fail("Failed to capture the screenshot.");
 		}
 	}
 

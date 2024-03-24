@@ -1,4 +1,4 @@
-package ui.base.config;
+package ui.base.configs;
 
 import java.util.Optional;
 
@@ -31,7 +31,7 @@ public class SimpleReportExtension
 	public void beforeAll(ExtensionContext context) throws Exception {
 		// get browser data from the system or the config file
 		Optional<String> browserDataFromSystem = context.getConfigurationParameter("browser");
-		String browserDataFromConfig = ConfigReader.getValue("config", "browser");
+		String browserDataFromConfig = AppTestUtils.getTestConfigBrowserName();
 		String browserName = "Chrome";
 		if (browserDataFromSystem.isPresent()) {
 			switch (browserDataFromSystem.get().toLowerCase().strip()) {
@@ -79,7 +79,7 @@ public class SimpleReportExtension
 	public void beforeEach(ExtensionContext context) throws Exception {
 		String testName = context.getDisplayName().replaceAll("[(].*[)]", "");
 		test = report.createTest(testName);
-		test.assignAuthor(ConfigReader.getValue("config", "author"));
+		test.assignAuthor(ConfigReader.getTextValue("config", "author"));
 		test.assignDevice(System.getProperty("os.name"));
 	}
 
@@ -91,7 +91,7 @@ public class SimpleReportExtension
 		else {
 			test.fail(data.get());
 			test.log(Status.FAIL, "Test Failed");
-			if (Boolean.valueOf(ConfigReader.getValue("config", "screenshot")))
+			if (ConfigReader.getBooleanValue("config", "screenshot"))
 				dataManager.webUtils().savesScreenshot();
 		}
 	}

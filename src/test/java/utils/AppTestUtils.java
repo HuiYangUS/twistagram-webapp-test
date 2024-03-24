@@ -14,11 +14,11 @@ import io.cucumber.datatable.DataTable;
 
 public class AppTestUtils {
 
-	public static void pause(long time) {
+	public static void pause(int time) {
 		try {
 			Thread.sleep(time * 1000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.out.println("Thread failed to sleep.");
 		}
 	}
 
@@ -64,11 +64,19 @@ public class AppTestUtils {
 	public static void testConfigReset() {
 		System.clearProperty("browser");
 		System.clearProperty("headless");
-		System.clearProperty("mobile");
+		System.clearProperty("deviceName");
 	}
 
-	public static boolean getDefaultTestCheck() {
-		return Boolean.valueOf(ConfigReader.getValue("config", "check").strip().toLowerCase());
+	public static int getTestConfigWaitTime() {
+		return ConfigReader.getIntNumValue("config", "waitTime");
+	}
+
+	public static String getTestConfigBrowserName() {
+		return ConfigReader.getTextValue("config", "browser").toLowerCase();
+	}
+
+	public static boolean isDemoTest() {
+		return ConfigReader.getBooleanValue("config", "demo");
 	}
 
 	public static String getOS() {

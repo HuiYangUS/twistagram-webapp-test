@@ -19,13 +19,12 @@ import utils.PageManager;
 public class LoginSteps {
 
 	private WebDriver driver = DriverManager.getDriver();
-	private WebDriverWait wait = new WebDriverWait(driver,
-			Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
+	private WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(AppTestUtils.getTestConfigWaitTime()));
 	private PageManager pages = PageManager.getInstance();
 
-	private static String url = ConfigReader.getValue("config", "url");
+	private static String url = ConfigReader.getTextValue("config", "url");
 
-	@Given("user navigates to [Twistagram] application")
+	@Given("user navigates to [TwistaGram] application")
 	public void user_navigates_to_twistagram_application() {
 		driver.navigate().to(url);
 	}
@@ -55,7 +54,7 @@ public class LoginSteps {
 		wait.until(ExpectedConditions.urlToBe(url));
 		assertTrue(pages.navBar().isHomeIconInFocusVisible(), "Home Icon is not visible.");
 		System.out.println(pages.homePage().getLoggedInText());
-		boolean demo = Boolean.valueOf(ConfigReader.getValue("config", "demo").toLowerCase());
+		boolean demo = AppTestUtils.isDemoTest();
 		if (demo)
 			AppTestUtils.pause(3);
 	}

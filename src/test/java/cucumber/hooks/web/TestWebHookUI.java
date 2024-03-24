@@ -8,31 +8,54 @@ import utils.ConfigReader;
 import utils.DataManager;
 import utils.DriverManager;
 import utils.PageManager;
-import utils.TestConditions;
 
 public class TestWebHookUI {
 
 	@Before(order = 1, value = "@chrome")
-	public void setupChrome() {
-		TestConditions.browser = "chrome";
+	public void useChrome() {
+		setupChrome();
 	}
 
 	@Before(order = 1, value = "@firefox")
-	public void setupFirefox() {
-		TestConditions.browser = "firefox";
+	public void useFirefox() {
+		System.setProperty("browser", "firefox");
 	}
 
-	@Before(order = 2, value = "@ui or @web or @e2e")
+	private static String phoneName = "iPhone SE";
+	private static String tabletName = "iPad Mini";
+
+	@Before(order = 1, value = "@phone")
+	public void setupPhone() {
+		setupChrome();
+		System.setProperty("deviceName", phoneName);
+	}
+
+	@Before(order = 1, value = "@tablet")
+	public void setupTablet() {
+		setupChrome();
+		System.setProperty("deviceName", tabletName);
+	}
+
+	private static void setupChrome() {
+		System.setProperty("browser", "chrome");
+	}
+
+	@After
+	public void tearDownMobile() {
+		System.clearProperty("deviceName");
+	}
+
+	@Before(order = 2, value = "@ui or @web or @e2e or @phone or @tablet")
 	public void setUp() {
 		DriverManager.getDriver();
 		PageManager.getInstance();
 		DataManager.getInstance();
 	}
 
-	@After(order = 2, value = "@ui or @web or @e2e")
+	@After(order = 2, value = "@ui or @web or @e2e or @phone or @tablet")
 	public void tearDown(Scenario scenario) {
 		DataManager dataManager = DataManager.getInstance();
-		if (Boolean.valueOf(ConfigReader.getValue("config", "screenshot")) && scenario.isFailed())
+		if (ConfigReader.getBooleanValue("config", "screenshot") && scenario.isFailed())
 			dataManager.webUtils().savesScreenshot();
 		DriverManager.reset();
 		PageManager.reset();

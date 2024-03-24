@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 import io.cucumber.datatable.DataTable;
 
 public class AppTestUtils {
@@ -19,6 +22,21 @@ public class AppTestUtils {
 			Thread.sleep(time * 1000);
 		} catch (InterruptedException e) {
 			System.out.println("Thread failed to sleep.");
+		}
+	}
+
+	public static void closeAllWindows(WebDriver driver) {
+		int num = driver.getWindowHandles().size();
+		for (int i = 0; i < num; i++)
+			driver.close();
+	}
+
+	public static void reallyQuitThisDriver(WebDriver driver) {
+		if (driver instanceof FirefoxDriver)
+			driver.quit();
+		else {
+			closeAllWindows(driver);
+			driver.quit();
 		}
 	}
 

@@ -18,7 +18,7 @@ public class AppTestUtils {
 		try {
 			Thread.sleep(time * 1000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.out.println("Thread failed to sleep.");
 		}
 	}
 
@@ -65,10 +65,6 @@ public class AppTestUtils {
 		System.clearProperty("browser");
 		System.clearProperty("headless");
 		System.clearProperty("deviceName");
-	}
-
-	public static boolean getDefaultTestCheck() {
-		return Boolean.valueOf(ConfigReader.getValue("config", "check").strip().toLowerCase());
 	}
 
 	public static String getOS() {

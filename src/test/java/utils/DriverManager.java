@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 public class DriverManager {
 
 	private DriverManager() {
-		// Nothing should be written here.
+		// WARN: Nothing should be written here.
 	}
 
 	public static WebDriver getDriver() {

@@ -31,7 +31,7 @@ public class DriverFactoryM {
 	private static int waitTime = 5;
 
 	private DriverFactoryM() {
-		// Nothing should be written here.
+		// WARN: Nothing should be written here.
 	}
 
 	private static void setUpDriver() {

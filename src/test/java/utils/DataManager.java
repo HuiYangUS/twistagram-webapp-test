@@ -9,7 +9,7 @@ public class DataManager {
 	private WebUtils webUtils;
 
 	private DataManager() {
-		// Nothing should be written here.
+		// WARN: Nothing should be written here.
 	}
 
 	public static DataManager getInstance() {

@@ -74,7 +74,7 @@ public class WebUtils {
 			driver.findElement(By.linkText("Sign out")).click();
 			driver.findElement(By.id("submitButton")).click();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("User is already logged in.");
 		}
 	}
 
@@ -117,7 +117,7 @@ public class WebUtils {
 		try {
 			FileUtils.copyFile(imgData, new File(String.format("target/webpage-screenshots/screenshot%s.png", tail)));
 		} catch (IOException e) {
-			assertTrue(false, "Failed to capture the screenshot.");
+			fail("Failed to capture the screenshot.");
 		}
 	}
 

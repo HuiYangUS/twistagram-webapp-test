@@ -20,7 +20,7 @@ public class ConfigReader {
 		try {
 			p.load(new FileInputStream(filePath));
 		} catch (Exception e) {
-			assertTrue(false, "No config file is discovered.");
+			fail("No config file is discovered.");
 		}
 		return p;
 	}

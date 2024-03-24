@@ -27,9 +27,9 @@ public class DriverFactoryPie {
 
 	private static ThreadLocal<WebDriver> localDriver;
 
-	private static String browser = ConfigReader.getValue("config", "browser").toLowerCase();
-	private static boolean headless = Boolean.valueOf(ConfigReader.getValue("config", "headless").toLowerCase());
-	private static String deviceName = ConfigReader.getValue("config", "deviceName");
+	private static String browser = AppTestUtils.getTestConfigBrowserName();
+	private static boolean headless = ConfigReader.getBooleanValue("config", "headless");
+	private static String deviceName = ConfigReader.getTextValue("config", "deviceName");
 	private static boolean isSet;
 	private static int waitTime = 5;
 
@@ -125,25 +125,25 @@ public class DriverFactoryPie {
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
 		options.addArguments("--no-sandbox");
-		if (Boolean.valueOf(ConfigReader.getValue("config", "incognito").toLowerCase()))
+		if (ConfigReader.getBooleanValue("config", "incognito"))
 			options.addArguments("--incognito");
 		useChromeForTest(options);
 	}
 
 	private static void useChromeForTest(ChromeOptions options) {
-		String testChromeUserDataPath = ConfigReader.getValue("config", "testChromeUserDataPath");
+		String testChromeUserDataPath = ConfigReader.getTextValue("config", "testChromeUserDataPath");
 		if (testChromeUserDataPath != null) {
 			options.addArguments(String.format("--user-data-dir=%s", testChromeUserDataPath));
 			options.addArguments(
-					String.format("--profile-directory=%s", ConfigReader.getValue("config", "testChromeProfile")));
+					String.format("--profile-directory=%s", ConfigReader.getTextValue("config", "testChromeProfile")));
 		}
-		options.setBinary(ConfigReader.getValue("config", "testChromeBinPath"));
+		options.setBinary(ConfigReader.getTextValue("config", "testChromeBinPath"));
 	}
 
 	private static void findChromeHeadless(ChromeOptions options) {
 		if (headless) {
 			options.addArguments("--headless=new");
-			options.addArguments("--user-agent=" + ConfigReader.getValue("config", "chromeUserAgent"));
+			options.addArguments("--user-agent=" + ConfigReader.getTextValue("config", "chromeUserAgent"));
 		}
 	}
 
@@ -181,15 +181,15 @@ public class DriverFactoryPie {
 		// turn off geographical locator
 		firefoxOptions.addPreference("geo.enabled", false);
 		useFirefoxProfile(firefoxOptions);
-		String firefoxBinPath = ConfigReader.getValue("config", "firefoxProfilePath");
+		String firefoxBinPath = ConfigReader.getTextValue("config", "firefoxBinPath");
 		if (firefoxBinPath != null)
 			firefoxOptions.setBinary(firefoxBinPath);
 	}
 
 	private static void useFirefoxProfile(FirefoxOptions firefoxOptions) {
-		String firefoxProfilePath = ConfigReader.getValue("config", "firefoxProfilePath");
+		String firefoxProfilePath = ConfigReader.getTextValue("config", "firefoxProfilePath");
 		if (firefoxProfilePath != null)
-			firefoxOptions.addArguments("-profile", ConfigReader.getValue("config", firefoxProfilePath));
+			firefoxOptions.addArguments("-profile", ConfigReader.getTextValue("config", firefoxProfilePath));
 	}
 
 	private static void findFirefoxHeadless(FirefoxOptions options) {

@@ -14,7 +14,7 @@ import io.cucumber.datatable.DataTable;
 
 public class AppTestUtils {
 
-	public static void pause(long time) {
+	public static void pause(int time) {
 		try {
 			Thread.sleep(time * 1000);
 		} catch (InterruptedException e) {
@@ -65,6 +65,18 @@ public class AppTestUtils {
 		System.clearProperty("browser");
 		System.clearProperty("headless");
 		System.clearProperty("deviceName");
+	}
+
+	public static int getTestConfigWaitTime() {
+		return ConfigReader.getIntNumValue("config", "waitTime");
+	}
+
+	public static String getTestConfigBrowserName() {
+		return ConfigReader.getTextValue("config", "browser").toLowerCase();
+	}
+
+	public static boolean isDemoTest() {
+		return ConfigReader.getBooleanValue("config", "demo");
 	}
 
 	public static String getOS() {

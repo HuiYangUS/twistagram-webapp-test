@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import ui.base.configs.SimpleReportExtension;
 import ui.base.configs.WebTestConfig;
-import utils.ConfigReader;
+import utils.AppTestUtils;
 import utils.DriverManager;
 import utils.PageManager;
 import utils.WebUtils;
@@ -26,7 +26,7 @@ public class DriverFactoryWebBase {
 	@BeforeEach
 	protected void setUp() {
 		driver = DriverManager.getDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(Long.valueOf(ConfigReader.getValue("config", "waitTime"))));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(AppTestUtils.getTestConfigWaitTime()));
 		pages = PageManager.getInstance();
 		webUtils = new WebUtils(driver);
 	}

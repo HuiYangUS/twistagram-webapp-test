@@ -62,7 +62,7 @@ public class DriverFactoryPie {
 
 	public static void reset() {
 		if (localDriver != null && localDriver.get() != null) {
-			AppTestUtils.reallyQuitThisDriver(localDriver.get());
+			localDriver.get().quit();
 			localDriver.remove();
 		}
 		isSet = false;
@@ -123,9 +123,7 @@ public class DriverFactoryPie {
 	 * Set specific conditions of <Chrome> for this application
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
-		options.addArguments("--no-sandbox");
-		if (ConfigReader.getBooleanValue("config", "incognito"))
-			options.addArguments("--incognito");
+		options.addArguments("--guest");
 		useChromeForTest(options);
 	}
 

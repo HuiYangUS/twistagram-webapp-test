@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.cucumber.datatable.DataTable;
 
@@ -29,15 +28,6 @@ public class AppTestUtils {
 		int num = driver.getWindowHandles().size();
 		for (int i = 0; i < num; i++)
 			driver.close();
-	}
-
-	public static void reallyQuitThisDriver(WebDriver driver) {
-		if (driver instanceof FirefoxDriver)
-			driver.quit();
-		else {
-			closeAllWindows(driver);
-			driver.quit();
-		}
 	}
 
 	public static Map<String, String> stringToMap(String text) {
@@ -118,7 +108,7 @@ public class AppTestUtils {
 	}
 
 	/**
-	 * return first row of cucumber data table as map
+	 * Return the first row of a cucumber data table as map
 	 */
 	public static Map<String, String> getDataRow(DataTable dataTable) {
 		if (dataTable.asMaps().size() >= 1)

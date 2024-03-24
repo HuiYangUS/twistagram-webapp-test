@@ -1,9 +1,8 @@
 /target/
 **/resources/configs/
 
-### Extent Reports ###
-extent.properties
-pdf-config.yaml
+### any properties ###
+*.properties
 
 ### Eclipse ###
 .classpath

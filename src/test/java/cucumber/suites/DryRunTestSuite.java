@@ -15,5 +15,5 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = EXECUTION_DRY_RUN_PROPERTY_NAME, value = "true")
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@test")
 public class DryRunTestSuite {
-
+	// WARN: Nothing should be written here.
 }

@@ -14,5 +14,5 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-reports/cucumber.html")
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@smoke")
 public class SmokeTestSuite {
-
+	// WARN: Nothing should be written here.
 }

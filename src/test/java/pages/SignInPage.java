@@ -11,14 +11,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utils.AppTestUtils;
 import utils.DriverManager;
-import utils.WebUtils;
 
 public class SignInPage {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	@SuppressWarnings("unused")
-	private WebUtils utils;
 
 	@FindBy(xpath = "//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button")
 	private WebElement googleLogInButton;

@@ -10,7 +10,7 @@ Feature: Login
     And user confirms to login by clicking [Continue] button
     Then user is logged in and is on the [Home] page
 
-  @happy @google @smoke @ui @firefox
+  @happy @google @ui @firefox
   Scenario: Log in [TwistaGram] app using [Google] credentials
     Given user navigates to [TwistaGram] application
     When user clicks on [Log in with Google] button

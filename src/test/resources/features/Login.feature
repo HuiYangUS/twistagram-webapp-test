@@ -1,7 +1,7 @@
 @login
 Feature: Login
 
-  @happy @google @smoke @ui
+  @happy @google @smoke @ui @demo
   Scenario: Log in [TwistaGram] app using [Google] credentials
     Given user navigates to [TwistaGram] application
     When user clicks on [Log in with Google] button

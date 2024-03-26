@@ -9,3 +9,8 @@
 ---
 - Hui Yang
 - 3-24-2024
+
+### Maven
+---
+- Smoke Test: `mvn clean test -Dtest=SmokeTestSuite -Dheadless=true`
+- Regression Test: `mvn clean -Dsurefire.rerunFailingTestsCount=0 test -Dtest=RegressionTestSuite -Dheadless=true`

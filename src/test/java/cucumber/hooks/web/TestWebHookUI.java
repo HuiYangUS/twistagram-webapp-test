@@ -11,6 +11,12 @@ import utils.PageManager;
 
 public class TestWebHookUI {
 
+	@Before(order = 1, value = "@profile")
+	public void useProfile() {
+		setupChrome();
+		System.setProperty("profile", "true");
+	}
+
 	@Before(order = 1, value = "@chrome")
 	public void useChrome() {
 		setupChrome();

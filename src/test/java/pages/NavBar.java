@@ -10,12 +10,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utils.AppTestUtils;
+import utils.ConfigReader;
 import utils.DriverManager;
 
 public class NavBar {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
+
+	private static String url = ConfigReader.getTextValue("config", "url");
 
 	@FindBy(css = "img[alt='twistagram-logo']")
 	private WebElement logo;
@@ -28,6 +31,9 @@ public class NavBar {
 
 	@FindBy(xpath = "//*[name()='svg' and @data-testid='HomeOutlinedIcon']")
 	private WebElement homeIconOutFocus;
+
+	@FindBy(xpath = "//div/span[text()='Post']/parent::div")
+	private WebElement postBar;
 
 	public NavBar() {
 		driver = DriverManager.getDriver();
@@ -42,6 +48,11 @@ public class NavBar {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public void clickOnPostBar() {
+		postBar.click();
+		wait.until(ExpectedConditions.urlToBe(url + "post"));
 	}
 
 }

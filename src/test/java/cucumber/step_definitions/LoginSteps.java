@@ -9,10 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import utils.AppTestUtils;
-import utils.ConfigReader;
 import utils.DriverManager;
 import utils.PageManager;
 
@@ -22,7 +21,7 @@ public class LoginSteps {
 	private WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(AppTestUtils.getTestConfigWaitTime()));
 	private PageManager pages = PageManager.getInstance();
 
-	private static String url = ConfigReader.getTextValue("config", "url");
+	private static String url = "https://twistagram.re-boot.us/";
 
 	@Given("user navigates to [TwistaGram] application")
 	public void user_navigates_to_twistagram_application() {

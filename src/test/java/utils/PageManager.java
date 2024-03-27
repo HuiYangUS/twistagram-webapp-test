@@ -3,6 +3,7 @@ package utils;
 import pages.GoogleAccountPage;
 import pages.HomePage;
 import pages.NavBar;
+import pages.PostPage;
 import pages.SignInPage;
 
 public class PageManager {
@@ -12,6 +13,7 @@ public class PageManager {
 	private GoogleAccountPage googleAccountPage;
 	private NavBar navBar;
 	private HomePage homePage;
+	private PostPage postPage;
 
 	private PageManager() {
 		// WARN: Nothing should be written here.
@@ -52,6 +54,12 @@ public class PageManager {
 		if (homePage == null)
 			homePage = new HomePage();
 		return homePage;
+	}
+
+	public PostPage postPage() {
+		if (postPage == null)
+			postPage = new PostPage();
+		return postPage;
 	}
 
 }

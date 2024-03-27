@@ -123,17 +123,22 @@ public class DriverFactoryPie {
 	 * Set specific conditions of <Chrome> for this application
 	 */
 	private static void setChromeOptions(ChromeOptions options) {
-		options.addArguments("--guest");
 		useChromeForTest(options);
 	}
 
 	private static void useChromeForTest(ChromeOptions options) {
+		boolean profile = false;
+		String profileKey = "profile";
+		if (System.getProperty(profileKey) != null)
+			profile = Boolean.valueOf(System.getProperty(profileKey).toLowerCase());
 		String testChromeUserDataPath = ConfigReader.getTextValue("config", "testChromeUserDataPath");
-		if (testChromeUserDataPath != null) {
+		if (testChromeUserDataPath != null && profile) {
 			options.addArguments(String.format("--user-data-dir=%s", testChromeUserDataPath));
 			options.addArguments(
 					String.format("--profile-directory=%s", ConfigReader.getTextValue("config", "testChromeProfile")));
 		}
+		if (!profile)
+			options.addArguments("--guest");
 		options.setBinary(ConfigReader.getTextValue("config", "testChromeBinPath"));
 	}
 

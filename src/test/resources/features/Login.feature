@@ -19,7 +19,7 @@ Feature: Login
     And user confirms to login by clicking [Continue] button
     Then user is logged in and is on the [Home] page
 
-  @happy @google @smoke @phone
+  @happy @google @smoke @phone @mobile
   Scenario: Log in [TwistaGram] app using [Google] credentials in mobile [Phone] mode
     Given user navigates to [TwistaGram] application
     When user clicks on [Log in with Google] button
@@ -28,7 +28,7 @@ Feature: Login
     And user confirms to login by clicking [Continue] button
     Then user is logged in and is on the [Home] page
 
-  @happy @google @smoke @tablet
+  @happy @google @smoke @tablet @mobile
   Scenario: Log in [TwistaGram] app using [Google] credentials in mobile [Tablet] mode
     Given user navigates to [TwistaGram] application
     When user clicks on [Log in with Google] button

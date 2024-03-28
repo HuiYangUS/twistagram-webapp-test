@@ -32,8 +32,14 @@ public class NavBar {
 	@FindBy(xpath = "//*[name()='svg' and @data-testid='HomeOutlinedIcon']")
 	private WebElement homeIconOutFocus;
 
+	@FindBy(xpath = "//div/span[text()='Home']/parent::div")
+	private WebElement homeBar;
+
 	@FindBy(xpath = "//div/span[text()='Post']/parent::div")
 	private WebElement postBar;
+
+	@FindBy(xpath = "//div/span[text()='Profile']/parent::div")
+	private WebElement profileBar;
 
 	public NavBar() {
 		driver = DriverManager.getDriver();
@@ -50,9 +56,19 @@ public class NavBar {
 		}
 	}
 
+	public void clickOnHomeBar() {
+		homeBar.click();
+		wait.until(ExpectedConditions.urlToBe(url));
+	}
+
 	public void clickOnPostBar() {
 		postBar.click();
 		wait.until(ExpectedConditions.urlToBe(url + "post"));
+	}
+
+	public void clickOnProfileBar() {
+		profileBar.click();
+		wait.until(ExpectedConditions.urlContains(url + "profile/"));
 	}
 
 }

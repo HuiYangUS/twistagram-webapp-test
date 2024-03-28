@@ -1,9 +1,11 @@
 package utils;
 
+import pages.EditProfilePage;
 import pages.GoogleAccountPage;
 import pages.HomePage;
 import pages.NavBar;
 import pages.PostPage;
+import pages.ProfilePage;
 import pages.SignInPage;
 
 public class PageManager {
@@ -14,6 +16,8 @@ public class PageManager {
 	private NavBar navBar;
 	private HomePage homePage;
 	private PostPage postPage;
+	private ProfilePage profilePage;
+	private EditProfilePage editProfilePage;
 
 	private PageManager() {
 		// WARN: Nothing should be written here.
@@ -61,6 +65,18 @@ public class PageManager {
 		if (postPage == null)
 			postPage = new PostPage();
 		return postPage;
+	}
+
+	public ProfilePage profilePage() {
+		if (profilePage == null)
+			profilePage = new ProfilePage();
+		return profilePage;
+	}
+
+	public EditProfilePage editProfilePage() {
+		if (editProfilePage == null)
+			editProfilePage = new EditProfilePage();
+		return editProfilePage;
 	}
 
 }

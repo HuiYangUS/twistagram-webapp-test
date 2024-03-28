@@ -69,6 +69,10 @@ public class AppTestUtils {
 		return LocalDate.now().toString();
 	}
 
+	public static String getFormattedDateString() {
+		return getDateString().replace("-", "");
+	}
+
 	public static void testConfigReset() {
 		System.clearProperty("browser");
 		System.clearProperty("headless");

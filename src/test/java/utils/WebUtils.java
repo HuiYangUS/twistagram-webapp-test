@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -38,6 +39,18 @@ public class WebUtils {
 
 	public void jsClick(By locator) {
 		jsClick(driver.findElement(locator));
+	}
+
+	/**
+	 * When an element has "autocomplete" on
+	 */
+	public void forceClear(WebElement element) {
+		while (!element.getAttribute("value").equals(""))
+			element.sendKeys(Keys.BACK_SPACE);
+	}
+
+	public void forceClear(By locator) {
+		forceClear(driver.findElement(locator));
 	}
 
 	/**

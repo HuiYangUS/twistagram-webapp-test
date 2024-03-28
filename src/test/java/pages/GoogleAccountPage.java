@@ -23,10 +23,10 @@ public class GoogleAccountPage {
 	private static String url = "https://accounts.google.com/";
 	private static String email = ConfigReader.getTextValue("config", "email");
 
-	@FindBy(xpath = "//input[@type='email']")
+	@FindBy(id = "identifierId")
 	private WebElement googleEmailInput;
 
-	@FindBy(xpath = "//input[@type='password']")
+	@FindBy(name = "Passwd")
 	private WebElement passwordInput;
 
 	@FindBy(xpath = "//span[text()='Sign in to re-boot.us']")

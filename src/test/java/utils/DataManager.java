@@ -21,7 +21,8 @@ public class DataManager {
 	}
 
 	public static void reset() {
-		if (localDataManager.get() != null)
+		// localDataManager cannot be null
+		if (localDataManager != null && localDataManager.get() != null)
 			localDataManager.remove();
 	}
 

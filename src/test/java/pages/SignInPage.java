@@ -17,7 +17,7 @@ public class SignInPage {
 	private WebDriver driver;
 	private WebDriverWait wait;
 
-	@FindBy(xpath = "//button//*[name()='svg' and @data-testid='GoogleIcon']/ancestor::button")
+	@FindBy(css = "[id='google-login'] button")
 	private WebElement googleLogInButton;
 
 	public SignInPage() {

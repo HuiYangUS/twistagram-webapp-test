@@ -28,7 +28,8 @@ public class PageManager {
 	}
 
 	public static void reset() {
-		if (localPageManager.get() != null)
+		// localPageManager cannot be null
+		if (localPageManager != null && localPageManager.get() != null)
 			localPageManager.remove();
 	}
 

@@ -61,7 +61,7 @@ public class DriverFactoryPie {
 	}
 
 	public static void reset() {
-		if (localDriver != null && localDriver.get() != null) {
+		if (localDriver.get() != null) {
 			localDriver.get().quit();
 			localDriver.remove();
 		}

@@ -1,11 +1,11 @@
 package utils;
 
-import static org.junit.jupiter.api.Assertions.*;
+import pojos.ui.Profile;
 
 public class DataManager {
 
 	private static ThreadLocal<DataManager> localDataManager;
-	private static String password;
+	private Profile profile;
 	private WebUtils webUtils;
 
 	private DataManager() {
@@ -21,23 +21,24 @@ public class DataManager {
 	}
 
 	public static void reset() {
-		if (localDataManager != null && localDataManager.get() != null)
-			localDataManager.set(null);
-	}
-
-	public String getPasswordValue() {
-		assertNotNull(password, "Data Manager does not have the password value.");
-		return password;
-	}
-
-	public void setPasswordValue(String password) {
-		DataManager.password = password;
+		if (localDataManager.get() != null)
+			localDataManager.remove();
 	}
 
 	public WebUtils webUtils() {
 		if (webUtils == null)
 			webUtils = new WebUtils(DriverManager.getDriver());
 		return webUtils;
+	}
+
+	public Profile getProfile() {
+		if (profile == null)
+			profile = new Profile();
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 }

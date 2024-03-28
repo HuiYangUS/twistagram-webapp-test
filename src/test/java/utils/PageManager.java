@@ -29,7 +29,7 @@ public class PageManager {
 
 	public static void reset() {
 		if (localPageManager.get() != null)
-			localPageManager.set(null);
+			localPageManager.remove();
 	}
 
 	public SignInPage signInPage() {
